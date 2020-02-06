@@ -1,1 +1,6 @@
-This is the repostiory for my slides created with xaringan in RStudio. 
+# Slides
+
+This subdomain contains my slides for various talks. 
+My main website is [here.](https://carolineledbetter.us)
+Available Slides:  
+[rprojects](rprojects/)
