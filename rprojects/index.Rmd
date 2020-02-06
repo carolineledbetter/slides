@@ -1,7 +1,7 @@
 ---
 title: "Rproject templates for YOUR workflow"
 author: "Caroline Ledbetter"
-date: "`r Sys.Date()`"
+date: "2020-01-30"
 output: xaringan::moon_reader
 ---
 class: middle, left
