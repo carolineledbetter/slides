@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Rproject templates for YOUR workflow</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Caroline Ledbetter" />
+    <meta name="date" content="2020-02-05" />
+    <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Rproject templates for YOUR workflow
+### Caroline Ledbetter
+### 2020-02-05
+
+---
+
+class: middle, left
+
+
+
+#**Why Rproject Templates?**  
+--
+
+#If you can automate you should automate
+--
+
+#Stardized file structures are easy for you and your collaborators to work with
+
+---
+
+.pull-left[
+#**You need:**  
+
+#an R project  
+
+#Template Metadata  
+
+#Template Function  
+]
+--
+.pull-right[
+&lt;img src="img/filestructure.png" width="75%" /&gt;
+]
+
+---
+class:center, middle
+
+&lt;img src="img/CIDAtoolshex.png" width="60%" /&gt;
+
+
+---
+class:center, middle
+
+&lt;img src="img/cidaproject.png" width="100%" /&gt;
+
+
+---
+&lt;img src="img/projectsetup.dcf.png" width="100%" /&gt;
+
+---
+
+
+```r
+proj_setup &lt;- function(path, ...){
+  # ensure path exists
+  dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  dots &lt;- list(...)
+  attach(dots)
+  on.exit(detach(dots))
+  ProjectName &lt;- paste0(path)
+
+  ### Setup ReadMe Files ----
+  readme &lt;- c(paste0("# ", ProjectName, "  "),
+              paste0("**PI:**", PI, "  "),
+              paste0("**Analyst**:", analyst, "  "),
+              "",
+              "Details about the folders:",
+              '',
+              "File | Description",
+              "---|----------------------------------------------------------",
+              paste("Admin | contains the scope of work and other",
+                    "administrative documents"),
+              paste("Background | contains the background information for",
+                    "the analysis"),
+              "Code | contains all R scripts for this project"
+              )
+```
+
+---
+# Resources
+
+Rstudio How To Guide:  
+https://rstudio.github.io/rstudio-extensions/rstudio_project_templates.html
+
+CIDAtools Github Repo:
+[ledbettc/CIDATools](https://github.com/ledbettc/CIDAtools)
+
+#Find me at: 
+.pull-right[
+carolineledbetter.us  
+&lt;img src="img/iu.png" width="7%" align="center" /&gt;
+carolineledbetter@yahoo.com  
+&lt;img src="img/GitHub-Mark-120px-plus.png" width="5%" align="center" /&gt;
+ @ledbettc  
+&lt;img src="img/Twitter_Logo_Blue.png" width="8%" align="center" /&gt;
+@C_line_sealion
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
