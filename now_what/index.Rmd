@@ -37,42 +37,81 @@ load(file = 'demo_data.Rdata')
 ]
 
 ---
-```{r}
-spinal_encounters
+```{r, highlight.output = 3:4}
+spinal_encounters %>% 
+  glimpse
+```
+
+---
+
+```{r, highlight.output = 3}
+spinal_patients %>% 
+  glimpse
+```
+
+---
+
+```{r, highlight.output = 3:4}
+all_enc_spinal_pts %>% 
+  glimpse
+```
+
+---
+
+```{r, highlight.output = 3:4}
+allergy %>% 
+  glimpse
+```
+
+---
+
+```{r, highlight.output = 3}
+allergy_class %>% 
+  glimpse
+```
+
+---
+
+```{r, , highlight.output = 3:4}
+inpatient_meds %>% 
+  glimpse
 ```
 
 ---
 
 ```{r}
-spinal_patients
+spinal_encounters %>% 
+  count(encounter_type)
+
+spinal_encounters %>% 
+  count(department_name) %>% 
+  arrange(desc(n))
 ```
 
 ---
 
+```{r, highlight.output = 2}
+allergy %>% 
+  count(person_id) %>% 
+  arrange(desc(n))
+```
+
+---
 ```{r}
-all_enc_spinal_pts
+allergy %>% 
+  left_join(allergy_class) %>% 
+  group_by(person_id) %>% 
+  summarise(drug_allergy = any(drug), 
+            num_drug_allergy = sum(drug))
 ```
 
 ---
-
 ```{r}
-allergy
+inpatient_meds %>% 
+  filter(opioid)
 ```
 
 ---
-
-```{r}
-allergy_class
-```
-
----
-
-```{r}
-inpatient_meds
-```
-
----
-
 # Resources
 
 Slides:  
