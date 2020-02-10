@@ -4,6 +4,7 @@ author: "Caroline Ledbetter"
 date: "`r Sys.Date()`"
 output: 
   xaringan::moon_reader:
+    css: ["default", "default-fonts", "../css/all.min.css"]
     nature:
       highlightStyle: github
       highlightLines: true
@@ -113,7 +114,7 @@ inpatient_meds %>%
 
 ---
 # Resources
-
+<i class="fas fa-globe"></i>
 Slides:  
 `r paste0('https://slides.carolineledbetter.us/', params$slides)`
 
