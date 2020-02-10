@@ -118,7 +118,7 @@ Slides:
 `r paste0('https://slides.carolineledbetter.us/', params$slides)`
 
 Github Repo:
-[ledbettc/`r params$github`](`r paste0('https://github.com/ledbettc/slides/', params$github)`)
+[ledbettc/slides/`r params$github`](`r paste0('https://github.com/ledbettc/slides/', params$github)`)
 
 #Find me at: 
 .pull-right[
