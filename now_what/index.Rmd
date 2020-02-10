@@ -1,0 +1,96 @@
+---
+title: "I have my data - now what?"
+author: "Caroline Ledbetter"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    nature:
+      highlightStyle: github
+      highlightLines: true
+params:
+  slides: "now_what/"
+  github: "now_what"
+---
+class: center, top
+<!-- edit slides and repo in the YAML above -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(tidyverse) # load tidyverse package
+load(file = 'demo_data.Rdata')
+```
+
+#**Flat File vs Relational Data Tables**  
+
+.pull-left[
+#**Flat File**  
+#self-contained    
+ 
+]
+
+.pull-right[
+#**Relational Data Tables**  
+
+#links to other tables
+
+]
+
+---
+```{r}
+spinal_encounters
+```
+
+---
+
+```{r}
+spinal_patients
+```
+
+---
+
+```{r}
+all_enc_spinal_pts
+```
+
+---
+
+```{r}
+allergy
+```
+
+---
+
+```{r}
+allergy_class
+```
+
+---
+
+```{r}
+inpatient_meds
+```
+
+---
+
+# Resources
+
+Slides:  
+`r paste0('https://slides.carolineledbetter.us/', params$slides)`
+
+Github Repo:
+[ledbettc/`r params$github`](`r paste0('https://github.com/ledbettc/slides/', params$github)`)
+
+#Find me at: 
+.pull-right[
+carolineledbetter.us  
+<img src="img/iu.png" width="7%" align="center" />
+carolineledbetter@yahoo.com  
+<img src="img/GitHub-Mark-120px-plus.png" width="5%" align="center" />
+ @ledbettc  
+<img src="img/Twitter_Logo_Blue.png" width="8%" align="center" />
+@C_line_sealion
+]
+
+
+

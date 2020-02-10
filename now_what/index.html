@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>I have my data - now what?</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Caroline Ledbetter" />
+    <meta name="date" content="2020-02-10" />
+    <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# I have my data - now what?
+### Caroline Ledbetter
+### 2020-02-10
+
+---
+
+class: center, top
+&lt;!-- edit slides and repo in the YAML above --&gt;
+
+
+
+#**Flat File vs Relational Data Tables**  
+
+.pull-left[
+#**Flat File**  
+#self-contained    
+ 
+]
+
+.pull-right[
+#**Relational Data Tables**  
+
+#links to other tables
+
+]
+
+---
+
+```r
+spinal_encounters
+```
+
+```
+## # A tibble: 6,050 x 7
+##    encounter_id person_id  encounter_type   department_name    location_name      bmi days_from_dob_toen…
+##           &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;              
+##  1  83663678717 2747100281 Hospital Encoun… AMC NEUROSCIENCES… UCH INPATIENT S…  33   22286              
+##  2  80292709328 4620858514 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  22.8 22318              
+##  3  84727340281 4511788528 Hospital Encoun… AMC NEUROSCIENCES… UCH INPATIENT S…  22.9 23744              
+##  4  95192906386 4979543829 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  NA   8771               
+##  5 102768904434 2626001295 Hospital Encoun… AMC NEUROSCIENCES… UCH INPATIENT S…  29.5 23504              
+##  6  82639506120 4500849952 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  33.2 20600              
+##  7 104357338125 4379369366 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  29.9 22215              
+##  8  96331574374 4849352259 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  34.2 22335              
+##  9  92267122540 4625068521 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  30.7 22129              
+## 10  99039969046 4676043659 Hospital Encoun… AMC ORTHO UNIT     UCH INPATIENT S…  32.2 19671              
+## # … with 6,040 more rows
+```
+
+---
+
+
+```r
+spinal_patients
+```
+
+```
+## # A tibble: 6,050 x 9
+##    person_id race  ethnicity sex   financial_class zip   age_asof_201601… marijuana_usage…
+##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;           
+##  1 27471002… Whit… Hispanic  Male  Managed Care    806                 60 N               
+##  2 46208585… Whit… Non-Hisp… Fema… Medicare        804                 60 N               
+##  3 45117885… Whit… Non-Hisp… Fema… Self-pay        535                 64 N               
+##  4 49795438… Blac… Non-Hisp… Fema… Self-pay        802                 22 N               
+##  5 26260012… Blac… Non-Hisp… Male  Special Accoun… 802                 62 N               
+##  6 45008499… Whit… Non-Hisp… Fema… Self-pay        802                 55 N               
+##  7 43793693… Whit… Non-Hisp… Male  Managed Care    800                 59 N               
+##  8 48493522… Whit… Non-Hisp… Fema… Medicare        800                 59 Y               
+##  9 46250685… Whit… Non-Hisp… Male  Self-pay        800                 59 Y               
+## 10 46760436… Whit… Non-Hisp… Male  Self-pay        801                 52 Y               
+## # … with 6,040 more rows, and 1 more variable: marijuana_dx_hx &lt;chr&gt;
+```
+
+---
+
+
+```r
+all_enc_spinal_pts
+```
+
+```
+## # A tibble: 552,829 x 7
+##    person_id  encounter_id encounter_type    department_name   location_name      bmi days_from_dob_toen…
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;              
+##  1 2747100281  83071307983 Nurse Triage      WINDSOR FAM MED … UCHEALTHMG NORTH    NA 22265              
+##  2 2747100281  88085989701 Hospital Encount… AMC SPNE/PAIN RA… UCH OUTPATIENT …    NA 22392              
+##  3 2747100281  83359750201 Orders Only       WINDSOR FAM MED … UCHEALTHMG NORTH    NA 22273              
+##  4 2747100281  90244644130 Rehab Therapy Tr… OLD PKVIEW PT OP  UCHEALTHMG NORTH    NA 22462              
+##  5 2747100281  90244645084 Rehab Therapy Tr… OLD PKVIEW PT OP  UCHEALTHMG NORTH    NA 22464              
+##  6 2747100281  83355410450 Nurse Triage      WINDSOR FAM MED … UCHEALTHMG NORTH    NA 22273              
+##  7 2747100281  90244642222 Appointment       OLD PKVIEW PT OP  UCHEALTHMG NORTH    NA 22455              
+##  8 2747100281  88087721213 Ancillary Orders  AMC SPINE CENTER… UCH OUTPATIENT …    NA 22392              
+##  9 2747100281  83793910355 Anesthesia        AMC AIP PERIOP S… UCH INPATIENT S…    NA 22286              
+## 10 2747100281 100121375028 Hospital Encount… AMC SPNE/PAIN RA… UCH OUTPATIENT …    NA 22665              
+## # … with 552,819 more rows
+```
+
+---
+
+
+```r
+allergy
+```
+
+```
+## # A tibble: 9,424 x 2
+##    person_id  name                               
+##    &lt;chr&gt;      &lt;chr&gt;                              
+##  1 2747100281 NO KNOWN DRUG ALLERGIES            
+##  2 4620858514 IODINATED CONTRAST- ORAL AND IV DYE
+##  3 4511788528 ADHESIVE                           
+##  4 4979543829 AMOXICILLIN                        
+##  5 4979543829 TREE NUTS                          
+##  6 2626001295 SULFUR                             
+##  7 4500849952 &lt;NA&gt;                               
+##  8 4379369366 PREGABALIN                         
+##  9 4379369366 ONDANSETRON HCL (PF)               
+## 10 4849352259 ZOLPIDEM                           
+## # … with 9,414 more rows
+```
+
+---
+
+
+```r
+allergy_class
+```
+
+```
+## # A tibble: 804 x 2
+##    name  drug 
+##    &lt;chr&gt; &lt;lgl&gt;
+##  1 DYE   FALSE
+##  2 EGG   FALSE
+##  3 CAMA  FALSE
+##  4 CORN  FALSE
+##  5 IRON  FALSE
+##  6 MILK  FALSE
+##  7 MOLD  FALSE
+##  8 TALC  FALSE
+##  9 COCOA FALSE
+## 10 HONEY FALSE
+## # … with 794 more rows
+```
+
+---
+
+
+```r
+inpatient_meds
+```
+
+```
+## # A tibble: 155,723 x 23
+##    person_id encounter_id Name  GenericName Strength OrderName Route Frequency MinimumDose MaximumDose
+##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+##  1 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  ONCE PRN            5          10
+##  2 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  3 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  4 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  5 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  6 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  7 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  8 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+##  9 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5          20
+## 10 46208585…  80292709328 OXYC… oxyCODONE … 20 mg    oxyCODON… Oral  2 TIMES …          20          NA
+## # … with 155,713 more rows, and 13 more variables: CalculatedMinimumDose &lt;dbl&gt;,
+## #   CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;, CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;,
+## #   admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;, admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;,
+## #   days_from_dob_toprescription &lt;chr&gt;, days_from_dob_torelease &lt;chr&gt;,
+## #   days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;
+```
+
+---
+
+# Resources
+
+Slides:  
+https://slides.carolineledbetter.us/now_what/
+
+Github Repo:
+[ledbettc/now_what](https://github.com/ledbettc/slides/now_what)
+
+#Find me at: 
+.pull-right[
+carolineledbetter.us  
+&lt;img src="img/iu.png" width="7%" align="center" /&gt;
+carolineledbetter@yahoo.com  
+&lt;img src="img/GitHub-Mark-120px-plus.png" width="5%" align="center" /&gt;
+ @ledbettc  
+&lt;img src="img/Twitter_Logo_Blue.png" width="8%" align="center" /&gt;
+@C_line_sealion
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
