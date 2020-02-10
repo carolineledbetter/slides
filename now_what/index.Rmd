@@ -122,7 +122,7 @@ Github Repo:
 
 #Find me at: 
 .pull-right[
-carolineledbetter.us  
+<i class="fas fa-globe"></i> carolineledbetter.us  
 <img src="img/iu.png" width="7%" align="center" />
 carolineledbetter@yahoo.com  
 <img src="img/GitHub-Mark-120px-plus.png" width="5%" align="center" />
