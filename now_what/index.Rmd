@@ -4,7 +4,7 @@ author: "Caroline Ledbetter"
 date: "`r Sys.Date()`"
 output: 
   xaringan::moon_reader:
-    css: ["default", "default-fonts", "../css/all.min.css"]
+    css: ["default", "default-fonts", "../css/all.min.css", "../css/footer.css"]
     nature:
       highlightStyle: github
       highlightLines: true
@@ -12,8 +12,31 @@ params:
   slides: "now_what/"
   github: "now_what"
 ---
-class: center, top
+class:middle
+name: details
+.big[
+<i class="fas fa-images"></i>
+`r paste0('https://slides.carolineledbetter.us/', params$slides)`  
+<i class="fab fa-github-square"></i>
+`r paste0('https://github.com/ledbettc/slides', params$github)`
+]
+
+#Find me at: 
+.pull-right[
+<i class = "fas fa-globe"></i> carolineledbetter.us  
+<i class = "far fa-envelope"></i>
+carolineledbetter@yahoo.com  
+<i class="fab fa-github"></i>
+ @ledbettc  
+<i class="fab fa-twitter"></i>
+@C_line_sealion
+]
+---
+layout: true
 <!-- edit slides and repo in the YAML above -->
+.footer[`r paste0('https://slides.carolineledbetter.us/', params$slides)`]
+---
+class:center, top
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -36,7 +59,6 @@ load(file = 'demo_data.Rdata')
 #links to other tables
 
 ]
-
 ---
 ```{r, highlight.output = 3:4}
 spinal_encounters %>% 
@@ -113,24 +135,7 @@ inpatient_meds %>%
 ```
 
 ---
-# Resources
-<i class="fas fa-globe"></i>
-Slides:  
-`r paste0('https://slides.carolineledbetter.us/', params$slides)`
-
-Github Repo:
-[ledbettc/slides/`r params$github`](`r paste0('https://github.com/ledbettc/slides/', params$github)`)
-
-#Find me at: 
-.pull-right[
-<i class="fas fa-globe"></i> carolineledbetter.us  
-<img src="img/iu.png" width="7%" align="center" />
-carolineledbetter@yahoo.com  
-<img src="img/GitHub-Mark-120px-plus.png" width="5%" align="center" />
- @ledbettc  
-<img src="img/Twitter_Logo_Blue.png" width="8%" align="center" />
-@C_line_sealion
-]
+[Details](#details)
 
 
 

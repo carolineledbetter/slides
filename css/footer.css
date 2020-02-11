@@ -1,0 +1,15 @@
+.footer {
+    color: black;
+    position: fixed;
+    top: 95%;
+    left: 1%;
+    text-align: left;
+    width: 100%;
+}
+.big {
+    position: fixed;
+    top: 5%;
+    left: 2%;
+    text-align: left;
+    font-size: xx-large;
+}
