@@ -1,0 +1,51 @@
+---
+title: "A tidymodels workflow"
+author: "Caroline Ledbetter"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "../css/all.min.css", "../css/custom.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+params:
+  slides: "now_what/"
+  github: "now_what"
+---
+class:middle
+name: details
+<!-- edit slides and github repo in the YAML above -->
+.details[
+<i class="fas fa-images"></i>
+`r paste0('https://slides.carolineledbetter.us/', params$slides)`  
+<i class="fab fa-github-square"></i>
+`r paste0('https://github.com/ledbettc/slides/', params$github)`
+]
+
+.intro[
+#Find me at: 
+]
+.intro-right[
+<i class = "fas fa-globe"></i> carolineledbetter.us  
+<i class = "far fa-envelope"></i>
+carolineledbetter@yahoo.com  
+<i class="fab fa-github"></i>
+ @ledbettc  
+<i class="fab fa-twitter"></i>
+@C_line_sealion
+]
+
+---
+layout: true
+.footer[`r paste0('https://slides.carolineledbetter.us/', params$slides)`]
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(tidyverse) # load tidyverse package
+```
+
+---
+<!-- last slide go back to details slide -->
+[Details](#details)

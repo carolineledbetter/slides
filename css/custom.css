@@ -6,10 +6,20 @@
     text-align: left;
     width: 100%;
 }
-.big {
+.details {
     position: fixed;
     top: 5%;
-    left: 2%;
     text-align: left;
-    font-size: xx-large;
+    font-size: 175%;
+}
+
+.intro {
+    font-size: 200%;
+}
+
+.intro-right {
+    position:relative;
+    left:40%;
+    text-align: left;
+    font-size: 150%;
 }
