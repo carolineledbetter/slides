@@ -4,7 +4,7 @@
     <title>A tidymodels workflow</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-02-13" />
+    <meta name="date" content="2020-02-15" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/all.min.css" type="text/css" />
@@ -12,23 +12,27 @@
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
+
+class: title-slide, center, middle
+background-image: url(img/tidymodels_all_30.png)
+background-size: contain
+background-color:black
+
+
+
 
 # A tidymodels workflow
-### Caroline Ledbetter
-### 2020-02-13
 
+## Caroline Ledbetter
+
+### 2020-02-18 
+
+#### &lt;i class="fas fa-images"&gt;&lt;/i&gt; https://slides.carolineledbetter.us/tidymodels/ 
+&lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tidymodels
 ---
-
 class:middle
 name: details
 &lt;!-- edit slides and github repo in the YAML above --&gt;
-.details[
-&lt;i class="fas fa-images"&gt;&lt;/i&gt;
-https://slides.carolineledbetter.us/now_what/  
-&lt;i class="fab fa-github-square"&gt;&lt;/i&gt;
-https://github.com/ledbettc/slides/now_what
-]
 
 .intro[
 #Find me at: 
@@ -45,10 +49,76 @@ carolineledbetter@yahoo.com
 
 ---
 layout: true
-.footer[https://slides.carolineledbetter.us/now_what/]
+background-image: url(img/tidymodels_all_15.png)
+background-size: contain
+.footer[https://slides.carolineledbetter.us/tidymodels/]
+---
+class:center, middle
+&lt;strong&gt;
+&lt;blockquote class="twitter-tweet"&gt;
+&lt;p lang="en" dir="ltr"&gt;
+Exciting - with the tune package, 
+&lt;a href="https://twitter.com/topepos?ref_src=twsrc%5Etfw"&gt;@topepos&lt;/a&gt; 
+says the tidymodels suite of packages is now “a fully operational death star” for modeling in 
+&lt;a href="https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw"&gt;#rstats&lt;/a&gt;. 
+Check them out! &lt;a href="https://t.co/nCdA1Fayvv"&gt;https://t.co/nCdA1Fayvv&lt;/a&gt;&lt;/p&gt;&amp;mdash; 
+Emily Robinson (@robinson_es) 
+&lt;a href="https://twitter.com/robinson_es/status/1204918320346157056?ref_src=twsrc%5Etfw"&gt;
+December 12, 2019&lt;/a&gt;
+
+&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" 
+charset="utf-8"&gt;&lt;/script&gt;
+&lt;/strong&gt;
+--
+  
+------
+**`tidymodels` is a "meta-package" for modeling and statistical analysis that share the underlying design philosophy, grammar, and data structures of the tidyverse**  
+**&amp;mdash; https://github.com/tidymodels/tidymodels**  
+
+---
+background-image: url(img/tidymodels_all.png)
+background-size: contain
+
+---
+
+# The Data
+###[German Credit data from the University of California Irving Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29)
+
+
+```r
+library(tidymodels)
+source("R/import_credit_data.R")
+```
+
 ---
 
 
+```r
+glimpse(german_credit, width = 60)
+## Observations: 1,000
+## Variables: 21
+## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no…
+## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 36, …
+## $ CreditHistory             &lt;chr&gt; "critical account/ othe…
+## $ Purpose                   &lt;chr&gt; "radio/television", "ra…
+## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882,…
+## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings ac…
+## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to…
+## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 2, 3, 2,…
+## $ Personal                  &lt;chr&gt; "male:single", "female:…
+## $ OtherDebtorsGuarantors    &lt;chr&gt; "none", "none", "none",…
+## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 4, 2,…
+## $ Property                  &lt;chr&gt; "RealEstate", "RealEsta…
+## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 35,…
+## $ OtherInstallmentPlans     &lt;chr&gt; "none", "none", "none",…
+## $ Housing                   &lt;chr&gt; "own", "own", "own", "f…
+## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1,…
+## $ Job                       &lt;chr&gt; "skilled employee", "sk…
+## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 2, 1, 1,…
+## $ Telephone                 &lt;chr&gt; "yes, registered under …
+## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "y…
+## $ Class                     &lt;dbl&gt; 1, 2, 1, 1, 2, 1, 1, 1,…
+```
 
 ---
 &lt;!-- last slide go back to details slide --&gt;

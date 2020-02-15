@@ -6,12 +6,7 @@
     text-align: left;
     width: 100%;
 }
-.details {
-    position: fixed;
-    top: 5%;
-    text-align: left;
-    font-size: 175%;
-}
+
 
 .intro {
     font-size: 200%;
@@ -19,7 +14,12 @@
 
 .intro-right {
     position:relative;
-    left:40%;
+    left:47%;
     text-align: left;
     font-size: 150%;
 }
+
+.title-slide{
+    color: white;
+}
+
