@@ -35,7 +35,7 @@ knitr::opts_chunk$set(warning = FALSE,
 ### 2020-02-18 
 
 #### <i class="fas fa-images"></i> `r paste0('https://slides.carolineledbetter.us/', params$slides)` 
-<i class="fab fa-github-square"></i> `r paste0('https://github.com/ledbettc/slides/', params$github)`
+<i class="fab fa-github-square"></i> `r paste0('https://github.com/ledbettc/slides/tree/master/', params$github)`
 ---
 class:middle
 name: details
@@ -86,6 +86,7 @@ charset="utf-8"></script>
 
 
 ---
+class: center
 background-image: url(img/tidymodels_all.png)
 background-size: contain
 
@@ -94,8 +95,10 @@ class: middle
 # The Data
 ###[German Credit data from the University of California Irving Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29)
 
-```{r, message = FALSE}
+```{r}
 library(tidymodels)
+library(tune)
+library(workflows)
 source("R/import_credit_data.R")
 ```
 <br>
@@ -161,6 +164,58 @@ map_dfr(list(Training = training(credit_split_no_strata),
 ```{r}
 training(credit_split) %>% glimpse
 ```
+
+---
+
+**First we need a recipe...**
+
+```{r}
+our_recipe <- 
+  training(credit_split) %>% 
+  recipe(Class ~ .) %>%
+  step_mutate(
+    EmploymentDuration = 
+      factor(EmploymentDuration, 
+             levels = c('Unemployed', 
+                        'lt.1', 
+                        '1.to.4', 
+                        '4.to.7', 
+                        'gt.7'), 
+             ordered = TRUE)
+              ) %>% 
+  step_ordinalscore(EmploymentDuration) %>% 
+  step_string2factor(all_nominal()) %>% 
+  step_center(all_numeric()) %>% 
+  step_scale(all_numeric()) %>% 
+  # step_knnimpute(all_predictors()) %>% 
+  # step_nzv(all_predictors()) %>% 
+  # step_upsample(all_outcomes(), over_ratio = 1) %>% 
+  # step_filter(age > 70) %>% 
+  prep
+```
+
+---
+class:middle
+
+```{r}
+our_recipe
+```
+
+---
+
+#Resources:   
+
+.resources[
+Blog Post: http://carolineledbetter.us/2020/02/tidymodels-suite-demo/   
+tidymodels: https://github.com/tidymodels/tidymodels  
+rsample: https://tidymodels.github.io/rsample/  
+recipes: https://tidymodels.github.io/recipes/  
+parsnip: https://tidymodels.github.io/parsnip/  
+tune: https://tidymodels.github.io/tune/  
+dials:  https://tidymodels.github.io/dials/  
+yardstick: https://tidymodels.github.io/yardstick/  
+workflows: https://tidymodels.github.io/workflows/  
+]
 ---
 <!-- last slide go back to details slide -->
-[Details](#details)
+#[Return to Contact Info](#details)

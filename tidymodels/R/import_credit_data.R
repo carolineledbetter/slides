@@ -84,5 +84,6 @@ factor_key = list("A11" = "lt.0",
 
 german_credit <- 
   german_credit %>% 
-  mutate_if(is.character, recode, !!!factor_key)
+  mutate_if(is.character, recode, !!!factor_key) %>% 
+  mutate(Class = recode(Class, `1` = 'Good', `2` = 'Bad'))
 

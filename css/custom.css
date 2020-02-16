@@ -35,3 +35,7 @@ blockquote {
   background-position: center; 
 }
 
+.resources {
+  font-size: 150%;
+  padding-bottom: 3em;
+}

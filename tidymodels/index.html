@@ -28,7 +28,7 @@ background-color:black
 ### 2020-02-18 
 
 #### &lt;i class="fas fa-images"&gt;&lt;/i&gt; https://slides.carolineledbetter.us/tidymodels/ 
-&lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tidymodels
+&lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tree/master/tidymodels
 ---
 class:middle
 name: details
@@ -79,6 +79,7 @@ charset="utf-8"&gt;&lt;/script&gt;
 
 
 ---
+class: center
 background-image: url(img/tidymodels_all.png)
 background-size: contain
 
@@ -90,6 +91,8 @@ class: middle
 
 ```r
 library(tidymodels)
+library(tune)
+library(workflows)
 source("R/import_credit_data.R")
 ```
 &lt;br&gt;
@@ -124,7 +127,7 @@ glimpse(german_credit)
 ## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, …
 ## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none", "none", "none", "yes, registered …
 ## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "y…
-## $ Class                     &lt;dbl&gt; 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, …
+## $ Class                     &lt;chr&gt; "Good", "Bad", "Good", "Good", "Bad", "Good", "Good", "Good", "Good", "Bad", "Bad", "Bad", "G…
 ```
 ---
 &lt;br&gt;
@@ -157,9 +160,9 @@ credit_split_no_strata
 ```
 ## # A tibble: 2 x 3
 ##   Class Training Testing
-##   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  
-## 1     1 70%      70%    
-## 2     2 30%      30%
+##   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  
+## 1 Bad   30%      30%    
+## 2 Good  70%      70%
 ```
 
 # unstratified sample
@@ -167,9 +170,9 @@ credit_split_no_strata
 ```
 ## # A tibble: 2 x 3
 ##   Class Training Testing
-##   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  
-## 1     1 71%      66%    
-## 2     2 29%      34%
+##   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  
+## 1 Bad   29%      34%    
+## 2 Good  71%      66%
 ```
 
 ---
@@ -179,31 +182,102 @@ credit_split_no_strata
 training(credit_split) %&gt;% glimpse
 ## Observations: 750
 ## Variables: 21
-## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no checking account", "lt.0", "lt.0", "no checking account", "no checkin…
-## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 24, 12, 12, 12, 24, 15, 24, 24, 30, 24, 24, 9, 6, 10, 12, 10, 6, 12, 7, 18…
+## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no checking account", "lt.0", "lt.0", "no checking account", "0.to.200",…
+## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 24, 36, 12, 30, 12, 48, 12, 15, 24, 24, 30, 24, 24, 9, 6, 10, 10, 6, 12, 7…
 ## $ CreditHistory             &lt;chr&gt; "critical account/ other credits existing (not at this bank)", "existing credits paid back du…
 ## $ Purpose                   &lt;chr&gt; "radio/television", "radio/television", "education", "furniture/equipment", "car (new)", "fur…
-## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882, 4870, 2835, 3059, 1295, 1567, 1199, 1403, 1282, 2424, 8072, 12579, 34…
-## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings account", "lt.100", "lt.100", "lt.100", "lt.100", "500.to.1000", "gt.100…
-## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to.7", "4.to.7", "1.to.4", "gt.7", "4.to.7", "lt.1", "1.to.4", "gt.7", "…
-## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 3, 2, 3, 1, 4, 2, 4, 4, 2, 4, 3, 4, 2, 1, 3, 2, 1, 3, 3, 3, 2, 2, 4, 4, 4, 4, …
+## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882, 4870, 2835, 6948, 3059, 5234, 1295, 4308, 1567, 1403, 1282, 2424, 807…
+## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings account", "lt.100", "lt.100", "lt.100", "lt.100", "500.to.1000", "lt.100…
+## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to.7", "4.to.7", "1.to.4", "gt.7", "1.to.4", "4.to.7", "unemployed", "lt…
+## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 3, 2, 2, 4, 3, 3, 1, 2, 4, 4, 2, 4, 3, 4, 2, 1, 2, 1, 3, 3, 3, 2, 2, 4, 4, 1, …
 ## $ Personal                  &lt;chr&gt; "male:single", "female:divorced/separated/married", "male:single", "male:single", "male:singl…
 ## $ OtherDebtorsGuarantors    &lt;chr&gt; "none", "none", "none", "guarantor", "none", "none", "none", "none", "none", "none", "none", …
-## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 4, 1, 1, 4, 4, 2, 4, 3, 2, 2, 4, 3, 3, 4, 1, 2, 3, 2, 3, 2, 2, 4, 1, 2, 2, …
-## $ Property                  &lt;chr&gt; "RealEstate", "RealEstate", "RealEstate", "Insurance", "Unknown", "Insurance", "RealEstate", …
-## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 53, 61, 25, 22, 60, 28, 32, 53, 25, 44, 31, 48, 44, 48, 44, 26, 36, 42, 3…
+## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 2, 4, 2, 1, 4, 1, 4, 2, 4, 3, 2, 2, 4, 3, 3, 1, 2, 3, 2, 3, 2, 2, 4, 1, 3, …
+## $ Property                  &lt;chr&gt; "RealEstate", "RealEstate", "RealEstate", "Insurance", "Unknown", "Insurance", "CarOther", "R…
+## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 53, 35, 61, 28, 25, 24, 22, 28, 32, 53, 25, 44, 31, 48, 44, 48, 26, 36, 4…
 ## $ OtherInstallmentPlans     &lt;chr&gt; "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none…
-## $ Housing                   &lt;chr&gt; "own", "own", "own", "for free", "for free", "own", "own", "rent", "own", "own", "rent", "own…
-## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 3, 1, 1, 3, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1, …
+## $ Housing                   &lt;chr&gt; "own", "own", "own", "for free", "for free", "own", "rent", "own", "own", "rent", "rent", "ow…
+## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3, 1, 1, 3, 1, 2, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, …
 ## $ Job                       &lt;chr&gt; "skilled employee", "skilled employee", "unskilled - resident", "skilled employee", "skilled …
-## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none", "none", "none", "none", "none", "…
+## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none", "none", "none", "none", "yes, reg…
 ## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "y…
-## $ Class                     &lt;dbl&gt; 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, …
+## $ Class                     &lt;chr&gt; "Good", "Bad", "Good", "Good", "Bad", "Good", "Good", "Good", "Bad", "Bad", "Bad", "Good", "G…
 ```
+
+---
+
+**First we need a recipe...**
+
+
+```r
+our_recipe &lt;- 
+  training(credit_split) %&gt;% 
+  recipe(Class ~ .) %&gt;%
+  step_mutate(
+    EmploymentDuration = 
+      factor(EmploymentDuration, 
+             levels = c('Unemployed', 
+                        'lt.1', 
+                        '1.to.4', 
+                        '4.to.7', 
+                        'gt.7'), 
+             ordered = TRUE)
+              ) %&gt;% 
+  step_ordinalscore(EmploymentDuration) %&gt;% 
+  step_string2factor(all_nominal()) %&gt;% 
+  step_center(all_numeric()) %&gt;% 
+  step_scale(all_numeric()) %&gt;% 
+  # step_knnimpute(all_predictors()) %&gt;% 
+  # step_nzv(all_predictors()) %&gt;% 
+  # step_upsample(all_outcomes(), over_ratio = 1) %&gt;% 
+  # step_filter(age &gt; 70) %&gt;% 
+  prep
+```
+
+---
+class:middle
+
+
+```r
+our_recipe
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         20
+## 
+## Training data contained 750 data points and no missing data.
+## 
+## Operations:
+## 
+## Variable mutation for  EmploymentDuration [trained]
+## Scoring for EmploymentDuration [trained]
+## Factor variables from CheckingAccountStatus, CreditHistory, Purpose, SavingsAccountBonds, ... [trained]
+## Centering for Duration, Amount, EmploymentDuration, InstallmentRatePercentage, ResidenceDuration, ... [trained]
+## Scaling for Duration, Amount, EmploymentDuration, InstallmentRatePercentage, ResidenceDuration, ... [trained]
+```
+
+---
+
+#Resources:   
+
+.resources[
+Blog Post: http://carolineledbetter.us/2020/02/tidymodels-suite-demo/   
+tidymodels: https://github.com/tidymodels/tidymodels  
+rsample: https://tidymodels.github.io/rsample/  
+recipes: https://tidymodels.github.io/recipes/  
+parsnip: https://tidymodels.github.io/parsnip/  
+tune: https://tidymodels.github.io/tune/  
+dials:  https://tidymodels.github.io/dials/  
+yardstick: https://tidymodels.github.io/yardstick/  
+workflows: https://tidymodels.github.io/workflows/  
+]
 ---
 &lt;!-- last slide go back to details slide --&gt;
-[Details](#details)
+#[Return to Contact Info](#details)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
