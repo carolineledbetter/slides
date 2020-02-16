@@ -4,7 +4,7 @@
     <title>I have my data - now what?</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-02-10" />
+    <meta name="date" content="2020-02-15" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/all.min.css" type="text/css" />
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # I have my data - now what?
 ### Caroline Ledbetter
-### 2020-02-10
+### 2020-02-15
 
 ---
 
@@ -26,7 +26,7 @@ name: details
 &lt;i class="fas fa-images"&gt;&lt;/i&gt;
 https://slides.carolineledbetter.us/now_what/  
 &lt;i class="fab fa-github-square"&gt;&lt;/i&gt;
-https://github.com/ledbettc/slidesnow_what
+https://github.com/ledbettc/slides/tree/master/now_what
 ]
 
 #Find me at: 
@@ -69,38 +69,12 @@ spinal_encounters %&gt;%
   glimpse
 ```
 
-```
-## Observations: 6,050
-## Variables: 7
-*## $ encounter_id              &lt;dbl&gt; 83663678717, 80292709328, 84727340281, 95192906386, 10276…
-*## $ person_id                 &lt;chr&gt; "2747100281", "4620858514", "4511788528", "4979543829", "…
-## $ encounter_type            &lt;chr&gt; "Hospital Encounter", "Hospital Encounter", "Hospital Enc…
-## $ department_name           &lt;chr&gt; "AMC NEUROSCIENCES UNIT", "AMC ORTHO UNIT", "AMC NEUROSCI…
-## $ location_name             &lt;chr&gt; "UCH INPATIENT SERVICES", "UCH INPATIENT SERVICES", "UCH …
-## $ bmi                       &lt;dbl&gt; 33.0, 22.8, 22.9, NA, 29.5, 33.2, 29.9, 34.2, 30.7, 32.2,…
-## $ days_from_dob_toencounter &lt;chr&gt; "22286", "22318", "23744", "8771", "23504", "20600", "222…
-```
-
 ---
 
 
 ```r
 spinal_patients %&gt;% 
   glimpse
-```
-
-```
-## Observations: 6,050
-## Variables: 9
-*## $ person_id                      &lt;chr&gt; "2747100281", "4620858514", "4511788528", "497954382…
-## $ race                           &lt;chr&gt; "White or Caucasian", "White or Caucasian", "White o…
-## $ ethnicity                      &lt;chr&gt; "Hispanic", "Non-Hispanic", "Non-Hispanic", "Non-His…
-## $ sex                            &lt;chr&gt; "Male", "Female", "Female", "Female", "Male", "Femal…
-## $ financial_class                &lt;chr&gt; "Managed Care", "Medicare", "Self-pay", "Self-pay", …
-## $ zip                            &lt;chr&gt; "806", "804", "535", "802", "802", "802", "800", "80…
-## $ age_asof_20160101              &lt;dbl&gt; 60, 60, 64, 22, 62, 55, 59, 59, 59, 52, 43, 69, 67, …
-## $ marijuana_usage_social_history &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "Y", "Y", "Y", "N…
-## $ marijuana_dx_hx                &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N…
 ```
 
 ---
@@ -111,31 +85,12 @@ all_enc_spinal_pts %&gt;%
   glimpse
 ```
 
-```
-## Observations: 552,829
-## Variables: 7
-*## $ person_id                 &lt;chr&gt; "2747100281", "2747100281", "2747100281", "2747100281", "…
-*## $ encounter_id              &lt;dbl&gt; 83071307983, 88085989701, 83359750201, 90244644130, 90244…
-## $ encounter_type            &lt;chr&gt; "Nurse Triage", "Hospital Encounter", "Orders Only", "Reh…
-## $ department_name           &lt;chr&gt; "WINDSOR FAM MED OP", "AMC SPNE/PAIN RAD DIAG", "WINDSOR …
-## $ location_name             &lt;chr&gt; "UCHEALTHMG NORTH", "UCH OUTPATIENT SERVICES", "UCHEALTHM…
-## $ bmi                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-## $ days_from_dob_toencounter &lt;chr&gt; "22265", "22392", "22273", "22462", "22464", "22273", "22…
-```
-
 ---
 
 
 ```r
 allergy %&gt;% 
   glimpse
-```
-
-```
-## Observations: 9,424
-## Variables: 2
-*## $ person_id &lt;chr&gt; "2747100281", "4620858514", "4511788528", "4979543829", "4979543829", "26…
-*## $ name      &lt;chr&gt; "NO KNOWN DRUG ALLERGIES", "IODINATED CONTRAST- ORAL AND IV DYE", "ADHESI…
 ```
 
 ---
@@ -146,13 +101,6 @@ allergy_class %&gt;%
   glimpse
 ```
 
-```
-## Observations: 804
-## Variables: 2
-*## $ name &lt;chr&gt; "DYE", "EGG", "CAMA", "CORN", "IRON", "MILK", "MOLD", "TALC", "COCOA", "HONEY"…
-## $ drug &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
-```
-
 ---
 
 
@@ -161,71 +109,16 @@ inpatient_meds %&gt;%
   glimpse
 ```
 
-```
-## Observations: 323,053
-## Variables: 24
-*## $ person_id                      &lt;chr&gt; "2747100281", "2747100281", "2747100281", "274710028…
-*## $ encounter_id                   &lt;dbl&gt; 83663678717, 83663678717, 83663678717, 83663678717, …
-## $ Name                           &lt;chr&gt; "OXYCODONE 5 MG TABLET", "OXYCODONE 5 MG TABLET", "O…
-## $ GenericName                    &lt;chr&gt; "oxyCODONE 5 mg tablet", "oxyCODONE 5 mg tablet", "o…
-## $ Strength                       &lt;chr&gt; "5 mg", "5 mg", "5 mg", "5 mg", "5 mg", "5 mg", "5 m…
-## $ OrderName                      &lt;chr&gt; "oxyCODONE (ROXICODONE) immediate release tablet 5-1…
-## $ Route                          &lt;chr&gt; "Oral", "Oral", "Oral", "Oral", "Oral", "Oral", "Ora…
-## $ Frequency                      &lt;chr&gt; "ONCE PRN", "EVERY 4 HOURS PRN", "EVERY 4 HOURS PRN"…
-## $ MinimumDose                    &lt;dbl&gt; 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 20.0, 2…
-## $ MaximumDose                    &lt;dbl&gt; 10.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0…
-## $ CalculatedMinimumDose          &lt;dbl&gt; 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 20.0, 2…
-## $ CalculatedMaximumDose          &lt;dbl&gt; 10.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0…
-## $ DoseUnit                       &lt;chr&gt; "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg"…
-## $ CalculatedDoseUnit             &lt;chr&gt; "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg"…
-## $ NumberOfDoses                  &lt;dbl&gt; 1, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 1, 1,…
-## $ admin_dose                     &lt;dbl&gt; 5.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,…
-## $ admin_dose_unit                &lt;chr&gt; "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg"…
-## $ admin_route                    &lt;chr&gt; "Oral", "Oral", "Oral", "Oral", "Oral", "Oral", "Ora…
-## $ DepartmentName                 &lt;chr&gt; "AMC AIP PACU", "AMC NEUROSCIENCES UNIT", "AMC NEURO…
-## $ days_from_dob_toprescription   &lt;chr&gt; "22286", "22286", "22286", "22286", "22286", "22286"…
-## $ days_from_dob_torelease        &lt;chr&gt; "22286", "22286", "22286", "22286", "22286", "22286"…
-## $ days_from_dob_toadministration &lt;chr&gt; "22286", "22287", "22288", "22287", "22286", "22287"…
-## $ admin_time                     &lt;time&gt; 13:08:00, 14:51:00, 10:46:00, 08:33:00, 16:23:00, 2…
-## $ opioid                         &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-```
-
 ---
 
 
 ```r
 spinal_encounters %&gt;% 
   count(encounter_type)
-```
 
-```
-## # A tibble: 1 x 2
-##   encounter_type         n
-##   &lt;chr&gt;              &lt;int&gt;
-## 1 Hospital Encounter  6050
-```
-
-```r
 spinal_encounters %&gt;% 
   count(department_name) %&gt;% 
   arrange(desc(n))
-```
-
-```
-## # A tibble: 60 x 2
-##    department_name            n
-##    &lt;chr&gt;                  &lt;int&gt;
-##  1 MCR ORTHO/NEURO UNIT    1243
-##  2 AMC ORTHO UNIT          1152
-##  3 AMC NEUROSCIENCES UNIT   883
-##  4 MHC ORTHO SPINE UNIT     522
-##  5 PVH NEUROLOGY UNIT       512
-##  6 MCR PHASE II             335
-##  7 MHN MEDICAL SURGICAL 3   326
-##  8 MHC PHASE II             187
-##  9 PVH PHASE II             164
-## 10 AMC AIP PHASE II         136
-## # … with 50 more rows
 ```
 
 ---
@@ -235,23 +128,6 @@ spinal_encounters %&gt;%
 allergy %&gt;% 
   count(person_id) %&gt;% 
   arrange(desc(n))
-```
-
-```
-## # A tibble: 5,349 x 2
-*##    person_id      n
-##    &lt;chr&gt;      &lt;int&gt;
-##  1 4719610025    47
-##  2 3782162800    30
-##  3 4731792618    26
-##  4 4481636371    24
-##  5 5084239720    24
-##  6 977028606     24
-##  7 4638784194    22
-##  8 4767917776    21
-##  9 4849352259    21
-## 10 4498276057    20
-## # … with 5,339 more rows
 ```
 
 ---
@@ -264,50 +140,11 @@ allergy %&gt;%
             num_drug_allergy = sum(drug))
 ```
 
-```
-## # A tibble: 5,349 x 3
-##    person_id  drug_allergy num_drug_allergy
-##    &lt;chr&gt;      &lt;lgl&gt;                   &lt;int&gt;
-##  1 1003347587 FALSE                       0
-##  2 1007029077 TRUE                        4
-##  3 1008839771 FALSE                       0
-##  4 1009624914 TRUE                        1
-##  5 1010281266 NA                         NA
-##  6 1010773531 TRUE                        1
-##  7 1011427976 TRUE                        4
-##  8 1012785519 FALSE                       0
-##  9 1018192797 TRUE                        1
-## 10 1019866115 TRUE                        2
-## # … with 5,339 more rows
-```
-
 ---
 
 ```r
 inpatient_meds %&gt;% 
   filter(opioid)
-```
-
-```
-## # A tibble: 321,828 x 24
-##    person_id encounter_id Name  GenericName Strength OrderName Route Frequency MinimumDose
-##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  ONCE PRN            5
-##  2 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  3 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  4 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  5 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  6 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  7 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  8 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-##  9 27471002…  83663678717 OXYC… oxyCODONE … 5 mg     oxyCODON… Oral  EVERY 4 …           5
-## 10 46208585…  80292709328 OXYC… oxyCODONE … 20 mg    oxyCODON… Oral  2 TIMES …          20
-## # … with 321,818 more rows, and 15 more variables: MaximumDose &lt;dbl&gt;,
-## #   CalculatedMinimumDose &lt;dbl&gt;, CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;,
-## #   CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;, admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;,
-## #   admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;, days_from_dob_toprescription &lt;chr&gt;,
-## #   days_from_dob_torelease &lt;chr&gt;, days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;,
-## #   opioid &lt;lgl&gt;
 ```
 
 ---

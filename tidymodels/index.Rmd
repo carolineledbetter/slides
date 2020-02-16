@@ -61,6 +61,13 @@ background-size: contain
 .footer[`r paste0('https://slides.carolineledbetter.us/', params$slides)`]
 ---
 class:center, middle
+
+**`tidymodels` is a "meta-package" for modeling and statistical analysis that share the underlying design philosophy, grammar, and data structures of the tidyverse**  
+**&mdash; https://github.com/tidymodels/tidymodels**  
+
+--
+
+------
 <strong>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
@@ -75,19 +82,15 @@ December 12, 2019</a>
 
 </blockquote> <script async src="https://platform.twitter.com/widgets.js" 
 charset="utf-8"></script>
-</strong>
---
-  
-------
-**`tidymodels` is a "meta-package" for modeling and statistical analysis that share the underlying design philosophy, grammar, and data structures of the tidyverse**  
-**&mdash; https://github.com/tidymodels/tidymodels**  
+</strong> 
+
 
 ---
 background-image: url(img/tidymodels_all.png)
 background-size: contain
 
 ---
-
+class: middle
 # The Data
 ###[German Credit data from the University of California Irving Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29)
 
@@ -95,13 +98,69 @@ background-size: contain
 library(tidymodels)
 source("R/import_credit_data.R")
 ```
+<br>
+<br>
+Code: https://slides.carolineledbetter.us/tidymodels/R/import_credit_data.R
+Data: https://slides.carolineledbetter.us/tidymodels/data/german_credit.rda
 
 ---
 
 ```{r}
-glimpse(german_credit, width = 60)
+glimpse(german_credit)
+```
+---
+<br>
+<br>
+```{r}
+set.seed(1450)
+credit_split <- german_credit %>% 
+  initial_split(prop = 0.75, strata = Class)
+credit_split
+
+```
+<br>
+
+--
+
+```{r}
+set.seed(1450)
+credit_split_no_strata <- german_credit %>% 
+  initial_split(prop = 0.75)
+credit_split_no_strata
 ```
 
+---
+
+# stratified sample
+```{r, echo = FALSE, collapse = FALSE}
+get_prop <- function(data, variable){
+  data %>% 
+    count({{variable}}) %>% 
+    mutate(pct = scales::percent(n/sum(n)))
+}
+map_dfr(list(Training = training(credit_split), 
+             Testing = testing(credit_split)), 
+    get_prop, variable = Class, 
+    .id = 'source') %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = source, values_from = pct)
+```
+
+# unstratified sample
+```{r, echo = FALSE, collapse = FALSE}
+map_dfr(list(Training = training(credit_split_no_strata), 
+             Testing = testing(credit_split_no_strata)), 
+    get_prop, variable = Class, 
+    .id = 'source')%>% 
+  select(-n) %>% 
+  pivot_wider(names_from = source, values_from = pct)
+```
+
+---
+
+```{r}
+training(credit_split) %>% glimpse
+```
 ---
 <!-- last slide go back to details slide -->
 [Details](#details)
