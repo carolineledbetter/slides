@@ -23,3 +23,15 @@
     color: white;
 }
 
+blockquote {
+  border-left: none;
+  padding-left: 1em;
+}
+
+.twitter-tweet{
+  background-image: url("../img/Twitter_Logo_Blue_25.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+
