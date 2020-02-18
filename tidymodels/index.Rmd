@@ -410,10 +410,7 @@ roc_curve(rf_pred,
 ]
 
 ---
-
 layout:false
-
----
 class:center, middle
 
 
