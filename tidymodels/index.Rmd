@@ -232,29 +232,48 @@ knn_mod <-
 
 ---
 
-```{r, ref.label='models', highlight.output = 3:4, eval = F}
+```{r  eval = FALSE}
+# random forest
+rf_mod <- rand_forest(
+  trees = tune(), #<<
+  mtry = tune(), #<<
+  min_n = tune(), #<<
+  mode = 'classification'
+  ) %>%
+  set_engine("ranger")
+
+#k nearest neighbors
+knn_mod <- 
+  nearest_neighbor(
+    neighbors = tune(), #<<
+    weight_func = tune() #<<
+    ) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")
 ```
 
---
+---
+
 ```{r}
 set.seed(2134)
 (cv_resamples <- 
   training(credit_split) %>% 
   vfold_cv(v = 10))
 ```
+
+---
+class: center
+background-image: url(img/middle_row.png)
+background-size: contain
+
 ---
 
-```{r, include = FALSE}
-load(file = 'data/tuned_parameters.RData')
-```
-
-
-```{r, eval = FALSE}
-(ctrl <- control_grid(verbose = TRUE))
+```{r}
+ctrl <- control_grid(verbose = TRUE)
 set.seed(2117)
-(knn_grid <- knn_mod %>% 
-  parameters() %>% 
-  grid_regular(levels = c(15, 5)))
+knn_grid <- knn_mod %>% 
+  parameters() %>% #<<
+  grid_regular(levels = c(15, 5))
 knn_tune <- tune_grid(
   our_recipe, 
   model = knn_mod, 
@@ -262,24 +281,36 @@ knn_tune <- tune_grid(
   grid = knn_grid, 
   control = ctrl
 )
+```
 
+---
+
+```{r}
 (rf_params <- 
   dials::parameters(dials::trees(), 
                     dials::min_n(), 
-                    finalize(mtry(), 
-                             select(training(credit_split), 
-                                    -Class))
+                    finalize(mtry(), #<<
+                             select(training(credit_split), #<<
+                                    -Class)) #<<
                     ) %>% 
   dials::grid_latin_hypercube(size = 3))
-ctrl <- control_grid()
-(rf_tune <- 
+```
+
+
+```{r}
+rf_tune <- 
     tune::tune_grid(
       our_recipe, 
       model = rf_mod, 
       resamples = cv_resamples, 
       grid = rf_params, 
       control = ctrl
-    ))
+    )
+```
+
+---
+class: middle
+```{r}
 best_rf <-
   select_best(rf_tune, metric = "roc_auc",  maximize = FALSE)
 best_rf
@@ -287,10 +318,115 @@ rf_mod_final <- finalize_model(rf_mod, best_rf)
 ```
 ---
 
+```{r}
+train <- our_recipe %>% 
+  prep() %>% 
+  juice()
+test <- our_recipe %>% 
+  prep() %>% 
+  bake(testing(credit_split))
+```
+
+--
+
+```{r}
+rf_fit <- rf_mod_final %>% 
+  fit(Class ~ ., train)
+rf_fit
+```
+---
+```{r}
+credit_wfl <- 
+  workflow() %>% 
+  add_recipe(our_recipe) %>% 
+  add_model(rf_mod_final)
+fit(credit_wfl, 
+    training(credit_split)) #<<
+```
+
+---
+
+```{r}
+(log_reg_fit <- 
+   credit_wfl %>% 
+   update_model(log_reg_mod) %>% #<<
+   fit(training(credit_split)))
+```
+
+---
+
+.pull-left[
+```{r}
+predict(rf_fit, test) %>% 
+  bind_cols(select(test, 
+                   truth = Class))
+```
+]
+
+.pull-right[
+```{r}
+predict(rf_fit, 
+        test, 
+        type = 'prob') %>% 
+  bind_cols(select(test, 
+                   truth = Class))
+```
+]
+
+--
+
+```{r}
+rf_pred <- test %>% 
+  select(truth = Class) %>% 
+  bind_cols(predict(rf_fit, test, type = 'prob'), 
+            predict(rf_fit, test) )
+```
+
+---
+class: middle
+
+#Yardstick  
+
+```{r}
+metrics(rf_pred, truth, .pred_class)
+roc_auc(rf_pred, truth, .pred_Bad)
+```
+
+---
+class: middle
+
+.pull-left[
+```{r metrics, fig.show = 'hide'}
+roc_curve(rf_pred, 
+          truth, 
+          .pred_Bad) %>% 
+  autoplot()
+```
+]
+
+.pull-right[
+```{r ref.label = 'metrics', echo = FALSE}
+```
+]
+
+---
+
+layout:false
+
+---
+class:center, middle
+
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics('img/iu.jpg')
+```
+
+---
+
 #Resources:   
 
 .resources[
-Blog Post: http://carolineledbetter.us/2020/02/tidymodels-suite-demo/   
+Blog Post: *Coming Soon* :http://carolineledbetter.us/  
 tidymodels: https://github.com/tidymodels/tidymodels  
 rsample: https://tidymodels.github.io/rsample/  
 recipes: https://tidymodels.github.io/recipes/  
@@ -299,6 +435,8 @@ tune: https://tidymodels.github.io/tune/
 dials:  https://tidymodels.github.io/dials/  
 yardstick: https://tidymodels.github.io/yardstick/  
 workflows: https://tidymodels.github.io/workflows/  
+Applied Machine Learning: rstudio::conf 2020
+https://rstudio-conf-2020.github.io/applied-ml/
 ]
 ---
 <!-- last slide go back to details slide -->

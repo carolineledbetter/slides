@@ -4,7 +4,7 @@
     <title>A tidymodels workflow</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-02-17" />
+    <meta name="date" content="2020-02-18" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/all.min.css" type="text/css" />
@@ -177,7 +177,7 @@ credit_split_no_strata
 ---
 
 &lt;div class="figure"&gt;
-&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/recipes.png" alt="Artwork by @allison_horst" width="2810" /&gt;&lt;/a&gt;
+&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/recipes.png" alt="Artwork by @allison_horst" width="1067" /&gt;&lt;/a&gt;
 &lt;p class="caption"&gt;Artwork by @allison_horst&lt;/p&gt;
 &lt;/div&gt;
 ---
@@ -231,7 +231,7 @@ our_recipe
 
 ---
 &lt;div class="figure"&gt;
-&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/parsnip.png" alt="Artwork by @allison_horst" width="2920" /&gt;&lt;/a&gt;
+&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/parsnip.png" alt="Artwork by @allison_horst" width="1067" /&gt;&lt;/a&gt;
 &lt;p class="caption"&gt;Artwork by @allison_horst&lt;/p&gt;
 &lt;/div&gt;
 
@@ -271,30 +271,27 @@ knn_mod &lt;-
 
 
 ```r
-# logisitic regression
-log_reg_mod &lt;- 
-  logistic_reg() %&gt;%
-  set_engine("glm")%&gt;% 
-  set_mode('classification')
-
 # random forest
 rf_mod &lt;- rand_forest(
-  trees = tune(),
-  mtry = tune(),
-  min_n = tune(), 
+* trees = tune(),
+* mtry = tune(),
+* min_n = tune(),
   mode = 'classification'
   ) %&gt;%
   set_engine("ranger")
 
 #k nearest neighbors
 knn_mod &lt;- 
-  nearest_neighbor(neighbors = tune(), 
-                   weight_func = tune()) %&gt;% 
+  nearest_neighbor(
+*   neighbors = tune(),
+*   weight_func = tune()
+    ) %&gt;% 
   set_engine("kknn") %&gt;% 
   set_mode("classification")
 ```
 
---
+---
+
 
 ```r
 set.seed(2134)
@@ -316,18 +313,21 @@ set.seed(2134)
 ##  9 &lt;split [675/75]&gt; Fold09
 ## 10 &lt;split [675/75]&gt; Fold10
 ```
+
+---
+class: center
+background-image: url(img/middle_row.png)
+background-size: contain
+
 ---
 
 
-
-
-
 ```r
-(ctrl &lt;- control_grid(verbose = TRUE))
+ctrl &lt;- control_grid(verbose = TRUE)
 set.seed(2117)
-(knn_grid &lt;- knn_mod %&gt;% 
-  parameters() %&gt;% 
-  grid_regular(levels = c(15, 5)))
+knn_grid &lt;- knn_mod %&gt;% 
+* parameters() %&gt;%
+  grid_regular(levels = c(15, 5))
 knn_tune &lt;- tune_grid(
   our_recipe, 
   model = knn_mod, 
@@ -335,35 +335,320 @@ knn_tune &lt;- tune_grid(
   grid = knn_grid, 
   control = ctrl
 )
+```
 
+---
+
+
+```r
 (rf_params &lt;- 
   dials::parameters(dials::trees(), 
                     dials::min_n(), 
-                    finalize(mtry(), 
-                             select(training(credit_split), 
-                                    -Class))
+*                   finalize(mtry(),
+*                            select(training(credit_split),
+*                                   -Class))
                     ) %&gt;% 
   dials::grid_latin_hypercube(size = 3))
-ctrl &lt;- control_grid()
-(rf_tune &lt;- 
+## # A tibble: 3 x 3
+##   trees min_n  mtry
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1  1462    30     8
+## 2   944     9    18
+## 3   636    23     3
+```
+
+
+
+```r
+rf_tune &lt;- 
     tune::tune_grid(
       our_recipe, 
       model = rf_mod, 
       resamples = cv_resamples, 
       grid = rf_params, 
       control = ctrl
-    ))
+    )
+```
+
+---
+class: middle
+
+```r
 best_rf &lt;-
   select_best(rf_tune, metric = "roc_auc",  maximize = FALSE)
 best_rf
+## # A tibble: 1 x 3
+##    mtry trees min_n
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1    18   944     9
 rf_mod_final &lt;- finalize_model(rf_mod, best_rf)
 ```
+---
+
+
+```r
+train &lt;- our_recipe %&gt;% 
+  prep() %&gt;% 
+  juice()
+test &lt;- our_recipe %&gt;% 
+  prep() %&gt;% 
+  bake(testing(credit_split))
+```
+
+--
+
+
+```r
+rf_fit &lt;- rf_mod_final %&gt;% 
+  fit(Class ~ ., train)
+rf_fit
+## parsnip model object
+## 
+## Fit time:  982ms 
+## Ranger result
+## 
+## Call:
+##  ranger::ranger(formula = formula, data = data, mtry = ~18L, num.trees = ~944L,      min.node.size = ~9L, num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1), probability = TRUE) 
+## 
+## Type:                             Probability estimation 
+## Number of trees:                  944 
+## Sample size:                      750 
+## Number of independent variables:  20 
+## Mtry:                             18 
+## Target node size:                 9 
+## Variable importance mode:         none 
+## Splitrule:                        gini 
+## OOB prediction error (Brier s.):  0.1661911
+```
+---
+
+```r
+credit_wfl &lt;- 
+  workflow() %&gt;% 
+  add_recipe(our_recipe) %&gt;% 
+  add_model(rf_mod_final)
+fit(credit_wfl, 
+*   training(credit_split))
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: rand_forest()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────
+## 5 Recipe Steps
+## 
+## ● step_center()
+## ● step_scale()
+## ● step_mutate()
+## ● step_ordinalscore()
+## ● step_string2factor()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────────────────────
+## Ranger result
+## 
+## Call:
+##  ranger::ranger(formula = formula, data = data, mtry = ~18L, num.trees = ~944L,      min.node.size = ~9L, num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1), probability = TRUE) 
+## 
+## Type:                             Probability estimation 
+## Number of trees:                  944 
+## Sample size:                      750 
+## Number of independent variables:  20 
+## Mtry:                             18 
+## Target node size:                 9 
+## Variable importance mode:         none 
+## Splitrule:                        gini 
+## OOB prediction error (Brier s.):  0.1662282
+```
+
+---
+
+
+```r
+(log_reg_fit &lt;- 
+   credit_wfl %&gt;% 
+*  update_model(log_reg_mod) %&gt;%
+   fit(training(credit_split)))
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: logistic_reg()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────
+## 5 Recipe Steps
+## 
+## ● step_center()
+## ● step_scale()
+## ● step_mutate()
+## ● step_ordinalscore()
+## ● step_string2factor()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────────────────────
+## 
+## Call:  stats::glm(formula = formula, family = stats::binomial, data = data)
+## 
+## Coefficients:
+##                                                              (Intercept)  
+##                                                                 -0.08702  
+##                                              CheckingAccountStatusgt.200  
+##                                                                  0.38310  
+##                                                CheckingAccountStatuslt.0  
+##                                                                 -0.31961  
+##                                 CheckingAccountStatusno checking account  
+##                                                                  1.34995  
+##                                                                 Duration  
+##                                                                 -0.19458  
+## CreditHistorycritical account/ other credits existing (not at this bank)  
+##                                                                  1.52333  
+##                             CreditHistorydelay in paying off in the past  
+##                                                                  0.88547  
+##                    CreditHistoryexisting credits paid back duly till now  
+##                                                                  0.55648  
+##                CreditHistoryno credits taken/ all credits paid back duly  
+##                                                                  0.13453  
+##                                                         Purposecar (new)  
+##                                                                 -0.86459  
+##                                                        Purposecar (used)  
+##                                                                  1.03172  
+##                                               Purposedomestic appliances  
+##                                                                 -0.65840  
+##                                                         Purposeeducation  
+##                                                                 -0.57080  
+##                                               Purposefurniture/equipment  
+##                                                                  0.02357  
+##                                                            Purposeothers  
+##                                                                  0.06858  
+##                                                  Purposeradio/television  
+##                                                                  0.19205  
+##                                                           Purposerepairs  
+##                                                                 -0.38717  
+##                                                        Purposeretraining  
+##                                                                  1.60914  
+##                                                                   Amount  
+##                                                                 -0.42958  
+##                                           SavingsAccountBonds500.to.1000  
+##                                                                  0.23510  
+##                                               SavingsAccountBondsgt.1000  
+##                                                                  1.48298  
+##                                                SavingsAccountBondslt.100  
+##                                                                 -0.40903  
+##                           SavingsAccountBondsunknown/ no savings account  
+##                                                                  0.75882  
+## 
+## ...
+## and 50 more lines.
+```
+
+---
+
+.pull-left[
+
+```r
+predict(rf_fit, test) %&gt;% 
+  bind_cols(select(test, 
+                   truth = Class))
+## # A tibble: 250 x 2
+##    .pred_class truth
+##    &lt;fct&gt;       &lt;fct&gt;
+##  1 Good        Good 
+##  2 Good        Bad  
+##  3 Good        Good 
+##  4 Good        Good 
+##  5 Bad         Bad  
+##  6 Good        Bad  
+##  7 Good        Good 
+##  8 Good        Good 
+##  9 Bad         Bad  
+## 10 Good        Good 
+## # … with 240 more rows
+```
+]
+
+.pull-right[
+
+```r
+predict(rf_fit, 
+        test, 
+        type = 'prob') %&gt;% 
+  bind_cols(select(test, 
+                   truth = Class))
+## # A tibble: 250 x 3
+##    .pred_Bad .pred_Good truth
+##        &lt;dbl&gt;      &lt;dbl&gt; &lt;fct&gt;
+##  1     0.128      0.872 Good 
+##  2     0.358      0.642 Bad  
+##  3     0.156      0.844 Good 
+##  4     0.427      0.573 Good 
+##  5     0.801      0.199 Bad  
+##  6     0.490      0.510 Bad  
+##  7     0.403      0.597 Good 
+##  8     0.410      0.590 Good 
+##  9     0.673      0.327 Bad  
+## 10     0.374      0.626 Good 
+## # … with 240 more rows
+```
+]
+
+--
+
+
+```r
+rf_pred &lt;- test %&gt;% 
+  select(truth = Class) %&gt;% 
+  bind_cols(predict(rf_fit, test, type = 'prob'), 
+            predict(rf_fit, test) )
+```
+
+---
+class: middle
+
+#Yardstick  
+
+
+```r
+metrics(rf_pred, truth, .pred_class)
+## # A tibble: 2 x 3
+##   .metric  .estimator .estimate
+##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+## 1 accuracy binary         0.784
+## 2 kap      binary         0.404
+roc_auc(rf_pred, truth, .pred_Bad)
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 roc_auc binary         0.779
+```
+
+---
+class: middle
+
+.pull-left[
+
+```r
+roc_curve(rf_pred, 
+          truth, 
+          .pred_Bad) %&gt;% 
+  autoplot()
+```
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-26-1.png" width="504" /&gt;
+]
+
+---
+
+layout:false
+
+---
+class:center, middle
+
+
+&lt;img src="img/iu.jpg" width="70%" /&gt;
+
 ---
 
 #Resources:   
 
 .resources[
-Blog Post: http://carolineledbetter.us/2020/02/tidymodels-suite-demo/   
+Blog Post: *Coming Soon* :http://carolineledbetter.us/  
 tidymodels: https://github.com/tidymodels/tidymodels  
 rsample: https://tidymodels.github.io/rsample/  
 recipes: https://tidymodels.github.io/recipes/  
@@ -372,6 +657,8 @@ tune: https://tidymodels.github.io/tune/
 dials:  https://tidymodels.github.io/dials/  
 yardstick: https://tidymodels.github.io/yardstick/  
 workflows: https://tidymodels.github.io/workflows/  
+Applied Machine Learning: rstudio::conf 2020
+https://rstudio-conf-2020.github.io/applied-ml/
 ]
 ---
 &lt;!-- last slide go back to details slide --&gt;
