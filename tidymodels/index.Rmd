@@ -5,10 +5,10 @@ date: "`r Sys.Date()`"
 output: 
   xaringan::moon_reader:
     css: ["default", "default-fonts", "../css/all.min.css", "../css/custom.css"]
-    seal: false
     nature:
       highlightStyle: github
       highlightLines: true
+    seal: false
 params:
   slides: "tidymodels/"
   github: "tidymodels"
@@ -107,7 +107,6 @@ Code: https://slides.carolineledbetter.us/tidymodels/R/import_credit_data.R
 Data: https://slides.carolineledbetter.us/tidymodels/data/german_credit.rda
 
 ---
-
 ```{r}
 glimpse(german_credit)
 ```
@@ -161,37 +160,32 @@ map_dfr(list(Training = training(credit_split_no_strata),
 
 ---
 
-```{r}
-training(credit_split) %>% glimpse
+```{r, echo = FALSE, fig.cap = 'Artwork by @allison_horst', fig.link = 'https://github.com/allisonhorst'}
+knitr::include_graphics("img/recipes.png")
 ```
-
 ---
-
-**First we need a recipe...**
 
 ```{r}
 our_recipe <- 
   training(credit_split) %>% 
-  recipe(Class ~ .) %>%
-  step_mutate(
-    EmploymentDuration = 
-      factor(EmploymentDuration, 
-             levels = c('Unemployed', 
-                        'lt.1', 
-                        '1.to.4', 
-                        '4.to.7', 
-                        'gt.7'), 
-             ordered = TRUE)
-              ) %>% 
-  step_ordinalscore(EmploymentDuration) %>% 
-  step_string2factor(all_nominal()) %>% 
+  recipe(Class ~ .) %>% 
   step_center(all_numeric()) %>% 
-  step_scale(all_numeric()) %>% 
+  step_scale(all_numeric()) %>%
+  step_mutate(EmploymentDuration = 
+                factor(EmploymentDuration,
+                       levels = c('unemployed',
+                                  'lt.1',
+                                  '1.to.4',
+                                  '4.to.7',
+                                  'gt.7'),
+                       ordered = TRUE)
+              ) %>%
+  step_ordinalscore(EmploymentDuration) %>% 
+  step_string2factor(all_nominal()) 
   # step_knnimpute(all_predictors()) %>% 
   # step_nzv(all_predictors()) %>% 
   # step_upsample(all_outcomes(), over_ratio = 1) %>% 
-  # step_filter(age > 70) %>% 
-  prep
+  # step_filter(age > 70) 
 ```
 
 ---
@@ -201,6 +195,96 @@ class:middle
 our_recipe
 ```
 
+---
+```{r, echo = FALSE, fig.cap = 'Artwork by @allison_horst', fig.link = 'https://github.com/allisonhorst'}
+knitr::include_graphics("img/parsnip.png")
+```
+
+---
+
+```{r, eval = F}
+?boost_tree
+```
+
+```{r models}
+# logisitic regression
+log_reg_mod <- 
+  logistic_reg() %>%
+  set_engine("glm")%>% 
+  set_mode('classification')
+
+# random forest
+rf_mod <- rand_forest(
+  trees = tune(),
+  mtry = tune(),
+  min_n = tune(), 
+  mode = 'classification'
+  ) %>%
+  set_engine("ranger")
+
+#k nearest neighbors
+knn_mod <- 
+  nearest_neighbor(neighbors = tune(), 
+                   weight_func = tune()) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")
+```
+
+---
+
+```{r, ref.label='models', highlight.output = 3:4, eval = F}
+```
+
+--
+```{r}
+set.seed(2134)
+(cv_resamples <- 
+  training(credit_split) %>% 
+  vfold_cv(v = 10))
+```
+---
+
+```{r, include = FALSE}
+load(file = 'data/tuned_parameters.RData')
+```
+
+
+```{r, eval = FALSE}
+(ctrl <- control_grid(verbose = TRUE))
+set.seed(2117)
+(knn_grid <- knn_mod %>% 
+  parameters() %>% 
+  grid_regular(levels = c(15, 5)))
+knn_tune <- tune_grid(
+  our_recipe, 
+  model = knn_mod, 
+  resamples = cv_resamples, 
+  grid = knn_grid, 
+  control = ctrl
+)
+
+(rf_params <- 
+  dials::parameters(dials::trees(), 
+                    dials::min_n(), 
+                    finalize(mtry(), 
+                             select(training(credit_split), 
+                                    -Class))
+                    ) %>% 
+  dials::grid_latin_hypercube(size = 3))
+ctrl <- control_grid()
+(rf_tune <- 
+    tune::tune_grid(
+      our_recipe, 
+      model = rf_mod, 
+      resamples = cv_resamples, 
+      grid = rf_params, 
+      control = ctrl
+    ))
+best_rf <-
+  select_best(rf_tune, metric = "roc_auc",  maximize = FALSE)
+best_rf
+rf_mod_final <- finalize_model(rf_mod, best_rf)
+```
 ---
 
 #Resources:   

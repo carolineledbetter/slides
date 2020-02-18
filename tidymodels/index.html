@@ -4,7 +4,7 @@
     <title>A tidymodels workflow</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-02-15" />
+    <meta name="date" content="2020-02-17" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/all.min.css" type="text/css" />
@@ -102,32 +102,31 @@ Data: https://slides.carolineledbetter.us/tidymodels/data/german_credit.rda
 
 ---
 
-
 ```r
 glimpse(german_credit)
 ## Observations: 1,000
 ## Variables: 21
-## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no checking account", "lt.0", "lt.0", "no checking account", "no checkin…
-## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 36, 24, 36, 12, 30, 12, 48, 12, 24, 15, 24, 24, 30, 24, 24, 9, 6, 10, 12, …
-## $ CreditHistory             &lt;chr&gt; "critical account/ other credits existing (not at this bank)", "existing credits paid back du…
-## $ Purpose                   &lt;chr&gt; "radio/television", "radio/television", "education", "furniture/equipment", "car (new)", "edu…
-## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882, 4870, 9055, 2835, 6948, 3059, 5234, 1295, 4308, 1567, 1199, 1403, 128…
-## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings account", "lt.100", "lt.100", "lt.100", "lt.100", "unknown/ no savings a…
-## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to.7", "4.to.7", "1.to.4", "1.to.4", "gt.7", "1.to.4", "4.to.7", "unempl…
-## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 2, 3, 2, 2, 4, 3, 3, 1, 4, 2, 4, 4, 2, 4, 3, 4, 2, 1, 3, 2, 1, 4, 3, 3, 3, 3, …
-## $ Personal                  &lt;chr&gt; "male:single", "female:divorced/separated/married", "male:single", "male:single", "male:singl…
-## $ OtherDebtorsGuarantors    &lt;chr&gt; "none", "none", "none", "guarantor", "none", "none", "none", "none", "none", "none", "none", …
-## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 4, 2, 4, 2, 1, 4, 1, 4, 4, 2, 4, 3, 2, 2, 4, 3, 3, 4, 1, 2, 4, 3, 2, 4, 3, …
-## $ Property                  &lt;chr&gt; "RealEstate", "RealEstate", "RealEstate", "Insurance", "Unknown", "Unknown", "Insurance", "Ca…
-## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 35, 53, 35, 61, 28, 25, 24, 22, 60, 28, 32, 53, 25, 44, 31, 48, 44, 48, 4…
-## $ OtherInstallmentPlans     &lt;chr&gt; "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none…
-## $ Housing                   &lt;chr&gt; "own", "own", "own", "for free", "for free", "for free", "own", "rent", "own", "own", "rent",…
-## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 3, 1, 1, 3, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, …
-## $ Job                       &lt;chr&gt; "skilled employee", "skilled employee", "unskilled - resident", "skilled employee", "skilled …
-## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none", "none", "none", "yes, registered …
-## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "y…
-## $ Class                     &lt;chr&gt; "Good", "Bad", "Good", "Good", "Bad", "Good", "Good", "Good", "Good", "Bad", "Bad", "Bad", "G…
+## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no checking account", "lt.0", "lt.0", …
+## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 36, 24, 36, 12, 30, 12, 48, 12, 24, 15, …
+## $ CreditHistory             &lt;chr&gt; "critical account/ other credits existing (not at this bank…
+## $ Purpose                   &lt;chr&gt; "radio/television", "radio/television", "education", "furni…
+## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882, 4870, 9055, 2835, 6948, 3059, 5234,…
+## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings account", "lt.100", "lt.100", "lt.100"…
+## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to.7", "4.to.7", "1.to.4", "1.to.4", "…
+## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 2, 3, 2, 2, 4, 3, 3, 1, 4, 2, 4, 4, 2, 4, 3,…
+## $ Personal                  &lt;chr&gt; "male:single", "female:divorced/separated/married", "male:s…
+## $ OtherDebtorsGuarantors    &lt;chr&gt; "none", "none", "none", "guarantor", "none", "none", "none"…
+## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 4, 2, 4, 2, 1, 4, 1, 4, 4, 2, 4, 3, 2, 2,…
+## $ Property                  &lt;chr&gt; "RealEstate", "RealEstate", "RealEstate", "Insurance", "Unk…
+## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 35, 53, 35, 61, 28, 25, 24, 22, 60, 28,…
+## $ OtherInstallmentPlans     &lt;chr&gt; "none", "none", "none", "none", "none", "none", "none", "no…
+## $ Housing                   &lt;chr&gt; "own", "own", "own", "for free", "for free", "for free", "o…
+## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 3, 1, 1,…
+## $ Job                       &lt;chr&gt; "skilled employee", "skilled employee", "unskilled - reside…
+## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,…
+## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none",…
+## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "ye…
+## $ Class                     &lt;chr&gt; "Good", "Bad", "Good", "Good", "Bad", "Good", "Good", "Good…
 ```
 ---
 &lt;br&gt;
@@ -177,62 +176,34 @@ credit_split_no_strata
 
 ---
 
-
-```r
-training(credit_split) %&gt;% glimpse
-## Observations: 750
-## Variables: 21
-## $ CheckingAccountStatus     &lt;chr&gt; "lt.0", "0.to.200", "no checking account", "lt.0", "lt.0", "no checking account", "0.to.200",…
-## $ Duration                  &lt;dbl&gt; 6, 48, 12, 42, 24, 24, 36, 12, 30, 12, 48, 12, 15, 24, 24, 30, 24, 24, 9, 6, 10, 10, 6, 12, 7…
-## $ CreditHistory             &lt;chr&gt; "critical account/ other credits existing (not at this bank)", "existing credits paid back du…
-## $ Purpose                   &lt;chr&gt; "radio/television", "radio/television", "education", "furniture/equipment", "car (new)", "fur…
-## $ Amount                    &lt;dbl&gt; 1169, 5951, 2096, 7882, 4870, 2835, 6948, 3059, 5234, 1295, 4308, 1567, 1403, 1282, 2424, 807…
-## $ SavingsAccountBonds       &lt;chr&gt; "unknown/ no savings account", "lt.100", "lt.100", "lt.100", "lt.100", "500.to.1000", "lt.100…
-## $ EmploymentDuration        &lt;chr&gt; "gt.7", "1.to.4", "4.to.7", "4.to.7", "1.to.4", "gt.7", "1.to.4", "4.to.7", "unemployed", "lt…
-## $ InstallmentRatePercentage &lt;dbl&gt; 4, 2, 2, 2, 3, 3, 2, 2, 4, 3, 3, 1, 2, 4, 4, 2, 4, 3, 4, 2, 1, 2, 1, 3, 3, 3, 2, 2, 4, 4, 1, …
-## $ Personal                  &lt;chr&gt; "male:single", "female:divorced/separated/married", "male:single", "male:single", "male:singl…
-## $ OtherDebtorsGuarantors    &lt;chr&gt; "none", "none", "none", "guarantor", "none", "none", "none", "none", "none", "none", "none", …
-## $ ResidenceDuration         &lt;dbl&gt; 4, 2, 3, 4, 4, 4, 2, 4, 2, 1, 4, 1, 4, 2, 4, 3, 2, 2, 4, 3, 3, 1, 2, 3, 2, 3, 2, 2, 4, 1, 3, …
-## $ Property                  &lt;chr&gt; "RealEstate", "RealEstate", "RealEstate", "Insurance", "Unknown", "Insurance", "CarOther", "R…
-## $ Age                       &lt;dbl&gt; 67, 22, 49, 45, 53, 53, 35, 61, 28, 25, 24, 22, 28, 32, 53, 25, 44, 31, 48, 44, 48, 26, 36, 4…
-## $ OtherInstallmentPlans     &lt;chr&gt; "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none…
-## $ Housing                   &lt;chr&gt; "own", "own", "own", "for free", "for free", "own", "rent", "own", "own", "rent", "rent", "ow…
-## $ NumberExistingCredits     &lt;dbl&gt; 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3, 1, 1, 3, 1, 2, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, …
-## $ Job                       &lt;chr&gt; "skilled employee", "skilled employee", "unskilled - resident", "skilled employee", "skilled …
-## $ NumberPeopleMaintenance   &lt;dbl&gt; 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ Telephone                 &lt;chr&gt; "yes, registered under the customers name", "none", "none", "none", "none", "none", "yes, reg…
-## $ ForeignWorker             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "yes", "y…
-## $ Class                     &lt;chr&gt; "Good", "Bad", "Good", "Good", "Bad", "Good", "Good", "Good", "Bad", "Bad", "Bad", "Good", "G…
-```
-
+&lt;div class="figure"&gt;
+&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/recipes.png" alt="Artwork by @allison_horst" width="2810" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Artwork by @allison_horst&lt;/p&gt;
+&lt;/div&gt;
 ---
-
-**First we need a recipe...**
 
 
 ```r
 our_recipe &lt;- 
   training(credit_split) %&gt;% 
-  recipe(Class ~ .) %&gt;%
-  step_mutate(
-    EmploymentDuration = 
-      factor(EmploymentDuration, 
-             levels = c('Unemployed', 
-                        'lt.1', 
-                        '1.to.4', 
-                        '4.to.7', 
-                        'gt.7'), 
-             ordered = TRUE)
-              ) %&gt;% 
-  step_ordinalscore(EmploymentDuration) %&gt;% 
-  step_string2factor(all_nominal()) %&gt;% 
+  recipe(Class ~ .) %&gt;% 
   step_center(all_numeric()) %&gt;% 
-  step_scale(all_numeric()) %&gt;% 
+  step_scale(all_numeric()) %&gt;%
+  step_mutate(EmploymentDuration = 
+                factor(EmploymentDuration,
+                       levels = c('unemployed',
+                                  'lt.1',
+                                  '1.to.4',
+                                  '4.to.7',
+                                  'gt.7'),
+                       ordered = TRUE)
+              ) %&gt;%
+  step_ordinalscore(EmploymentDuration) %&gt;% 
+  step_string2factor(all_nominal()) 
   # step_knnimpute(all_predictors()) %&gt;% 
   # step_nzv(all_predictors()) %&gt;% 
   # step_upsample(all_outcomes(), over_ratio = 1) %&gt;% 
-  # step_filter(age &gt; 70) %&gt;% 
-  prep
+  # step_filter(age &gt; 70) 
 ```
 
 ---
@@ -249,17 +220,144 @@ our_recipe
 ##    outcome          1
 ##  predictor         20
 ## 
-## Training data contained 750 data points and no missing data.
-## 
 ## Operations:
 ## 
-## Variable mutation for  EmploymentDuration [trained]
-## Scoring for EmploymentDuration [trained]
-## Factor variables from CheckingAccountStatus, CreditHistory, Purpose, SavingsAccountBonds, ... [trained]
-## Centering for Duration, Amount, EmploymentDuration, InstallmentRatePercentage, ResidenceDuration, ... [trained]
-## Scaling for Duration, Amount, EmploymentDuration, InstallmentRatePercentage, ResidenceDuration, ... [trained]
+## Centering for all_numeric
+## Scaling for all_numeric
+## Variable mutation for  EmploymentDuration
+## Scoring for EmploymentDuration
+## Factor variables from all_nominal
 ```
 
+---
+&lt;div class="figure"&gt;
+&lt;a href="https://github.com/allisonhorst" target="_blank"&gt;&lt;img src="img/parsnip.png" alt="Artwork by @allison_horst" width="2920" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Artwork by @allison_horst&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+
+```r
+?boost_tree
+```
+
+
+```r
+# logisitic regression
+log_reg_mod &lt;- 
+  logistic_reg() %&gt;%
+  set_engine("glm")%&gt;% 
+  set_mode('classification')
+
+# random forest
+rf_mod &lt;- rand_forest(
+  trees = tune(),
+  mtry = tune(),
+  min_n = tune(), 
+  mode = 'classification'
+  ) %&gt;%
+  set_engine("ranger")
+
+#k nearest neighbors
+knn_mod &lt;- 
+  nearest_neighbor(neighbors = tune(), 
+                   weight_func = tune()) %&gt;% 
+  set_engine("kknn") %&gt;% 
+  set_mode("classification")
+```
+
+---
+
+
+```r
+# logisitic regression
+log_reg_mod &lt;- 
+  logistic_reg() %&gt;%
+  set_engine("glm")%&gt;% 
+  set_mode('classification')
+
+# random forest
+rf_mod &lt;- rand_forest(
+  trees = tune(),
+  mtry = tune(),
+  min_n = tune(), 
+  mode = 'classification'
+  ) %&gt;%
+  set_engine("ranger")
+
+#k nearest neighbors
+knn_mod &lt;- 
+  nearest_neighbor(neighbors = tune(), 
+                   weight_func = tune()) %&gt;% 
+  set_engine("kknn") %&gt;% 
+  set_mode("classification")
+```
+
+--
+
+```r
+set.seed(2134)
+(cv_resamples &lt;- 
+  training(credit_split) %&gt;% 
+  vfold_cv(v = 10))
+## #  10-fold cross-validation 
+## # A tibble: 10 x 2
+##    splits           id    
+##    &lt;named list&gt;     &lt;chr&gt; 
+##  1 &lt;split [675/75]&gt; Fold01
+##  2 &lt;split [675/75]&gt; Fold02
+##  3 &lt;split [675/75]&gt; Fold03
+##  4 &lt;split [675/75]&gt; Fold04
+##  5 &lt;split [675/75]&gt; Fold05
+##  6 &lt;split [675/75]&gt; Fold06
+##  7 &lt;split [675/75]&gt; Fold07
+##  8 &lt;split [675/75]&gt; Fold08
+##  9 &lt;split [675/75]&gt; Fold09
+## 10 &lt;split [675/75]&gt; Fold10
+```
+---
+
+
+
+
+
+```r
+(ctrl &lt;- control_grid(verbose = TRUE))
+set.seed(2117)
+(knn_grid &lt;- knn_mod %&gt;% 
+  parameters() %&gt;% 
+  grid_regular(levels = c(15, 5)))
+knn_tune &lt;- tune_grid(
+  our_recipe, 
+  model = knn_mod, 
+  resamples = cv_resamples, 
+  grid = knn_grid, 
+  control = ctrl
+)
+
+(rf_params &lt;- 
+  dials::parameters(dials::trees(), 
+                    dials::min_n(), 
+                    finalize(mtry(), 
+                             select(training(credit_split), 
+                                    -Class))
+                    ) %&gt;% 
+  dials::grid_latin_hypercube(size = 3))
+ctrl &lt;- control_grid()
+(rf_tune &lt;- 
+    tune::tune_grid(
+      our_recipe, 
+      model = rf_mod, 
+      resamples = cv_resamples, 
+      grid = rf_params, 
+      control = ctrl
+    ))
+best_rf &lt;-
+  select_best(rf_tune, metric = "roc_auc",  maximize = FALSE)
+best_rf
+rf_mod_final &lt;- finalize_model(rf_mod, best_rf)
+```
 ---
 
 #Resources:   
