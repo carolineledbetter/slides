@@ -11,9 +11,9 @@ affiliation:
     address: "Colorado School of Public Health"
 main_findings:
   - "Through simulations, we demonstrate that three sites can be used to evaluate the effects of an intervention using a step wedge design even in the presence of complex secular time trends and site effects."
-  - '![](csp2020_poster_files/figure-html/scripts-1.png){.main_pic}'
-logoleft_name: '![](csp2020_poster_files/figure-html/frame.png){.main-img-left}'
-logoright_name: '![](csp2020_poster_files/figure-html/sph_cida_wm_blk_v2-web.png){.main-img-right}'
+  - '![](img/scripts-1.png){.main_pic}'
+logoleft_name: '![](img/frame.png){.main-img-left}'
+logoright_name: '![](img/sph_cida_wm_blk_v2-web.png){.main-img-right}'
 output: 
   posterdown::posterdown_betterland:
     self_contained: false
@@ -92,7 +92,7 @@ that even with only one site per cluster secular time trends and interaction
 effects were actively seperated. 
 
 ```{r}
-knitr::include_graphics('csp2020_poster_files/figure-html/Group1-1.png')
+knitr::include_graphics('img/Group1-1.png')
 ```
 
 # Key Takeaways
