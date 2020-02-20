@@ -1,0 +1,104 @@
+---
+title: Step-Wedge Design to Evaluate the Effectiveness of Opioid Prescribing Aids
+author:
+  - name: Caroline Ledbetter
+    affil: 1
+    twitter: "C_line_sealion"
+    email: "caroline.ledbetter@cuanschutz.edu"
+    main: true
+affiliation:
+  - num: 1
+    address: "Colorado School of Public Health"
+main_findings:
+  - "Through simulations, we demonstrate that three sites can be used to evaluate the effects of an intervention using a step wedge design even in the presence of complex secular time trends and site effects."
+  - '![](csp2020_poster_files/figure-html/scripts-1.png){.main_pic}'
+logoleft_name: '![](csp2020_poster_files/figure-html/frame.png){.main-img-left}'
+logoright_name: '![](csp2020_poster_files/figure-html/sph_cida_wm_blk_v2-web.png){.main-img-right}'
+output: 
+  posterdown::posterdown_betterland:
+    self_contained: false
+    pandoc_args: --mathjax
+    highlight: haddock
+    number_sections: false
+primary_colour: "#CFB87C"
+secondary_colour: "#CFB87C"
+poster_height: "20.5in"
+poster_width: "36.5in"
+main_textsize: "105px"
+body_textsize: "32px"
+title_textsize: "85px"
+main_width: 0.5
+main_picwidth: "50%"
+link-citations: true
+bibliography: packages.bib
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(results = 'asis',
+                      echo = FALSE,
+                      warning = FALSE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      fig.align = 'center',
+                      out.width = "100%")
+options(knitr.table.format = "html") 
+```
+
+# Introduction
+
+In 2017, 47,600 people died of an opioid overdose (68% of all overdose deaths). 
+Our study explored the effect of integrating the prescription drug 
+monitoring program into the electronic heath record on physician prescribing 
+behaviors in emergency department. Billions of dollars are being spent to 
+reduce opioid addiction in the US. Stakeholders need data on the most effective 
+efforts but given all the attention, guidelines and interventions, the actual 
+effects of interventions can be difficult to disentangle from secular time 
+trends. Instituting an intervention effort across multiple sites 
+simultaneously can be expensive. Through simulations, we demonstrate 
+that three sites can be used to evaluate the effects of an intervention 
+using a step wedge design even in the presence of complex secular time 
+trends and site effects. 
+
+```{r, include=FALSE}
+knitr::write_bib(c('posterdown', 'rmarkdown','pagedown'), 'packages.bib')
+```
+
+## Objectives
+
+1. Explore how PDMP itegration effects prescribing behaviour.
+2. Simultate different "truths" and evaluate how well they are captured by the 
+model.
+
+# Methods
+
+Data on all non-admitted emergency room visits and outpatient prescription 
+medications for each phase were collected from the EHR(electronic health 
+record). data were also collected on searches of the PDMP data base, 
+the controlled substance prescription
+record (for six months before and after the visit) and the NaRxcheck score.  
+11 different scenarios with varying secular time trends, site effects, 
+intervention effects and interactions were simulated. 
+
+**_Now on to the results!_**
+
+<br>
+
+# Results
+
+Our study found that introduction of the PDMP 
+into the workflow did not reduce overall opioid prescriptions but did 
+reduce the prescribing rates in high risk individuals. Our simulations showed 
+that even with only one site per cluster secular time trends and interaction
+effects were actively seperated. 
+
+```{r}
+knitr::include_graphics('csp2020_poster_files/figure-html/Group1-1.png')
+```
+
+# Key Takeaways
+
+*	It is not clear that overall opioid prescribing rates are measurably 
+affected outside of the overall secular time trend.
+
+* Simulations indicate we can reasonably detect intervention effects 
+even given complex site and time effects. 
