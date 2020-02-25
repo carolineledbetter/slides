@@ -163,6 +163,7 @@ map_dfr(list(Training = training(credit_split_no_strata),
 ```{r, echo = FALSE, fig.cap = 'Artwork by @allison_horst', fig.link = 'https://github.com/allisonhorst'}
 knitr::include_graphics("img/recipes.png")
 ```
+
 ---
 
 ```{r}
