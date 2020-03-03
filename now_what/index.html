@@ -61,11 +61,31 @@ class:center, top
 --
 
 .left[
-.big[
-**Exposure:**  
+**Hypothesis:**  
 {{content}}
 ]
-]
+
+--
+
+Individuals with MDIS have higher rates of chronic pain post spinal surgery.  
+{{content}}
+
+--
+
+**Inclusion Criteria:**  
+{{content}}
+
+
+--
+
+Spinal procedure as defined by procedure codes  
+{{content}}
+
+--
+
+**Exposure:**  
+{{content}}
+
 
 --
 
@@ -93,35 +113,72 @@ Race, Ethnicity, Sex, Financial Class
 {{content}}
 
 ---
+class: inverse, center
 # Sample Plan  
 
-https://slides.carolineledbetter.us/now_what/img/data_analysis_plan.pdf
+&lt;a href="https://slides.carolineledbetter.us/now_what/img/data_analysis_plan.pdf" target="_blank"&gt;data_analysis_plan.pdf&lt;/a&gt;
 
 ---
 class:top
 
 .header[ .center[**Flat File vs Relational Data Tables**]  ]
+
+--
+
 .big[
 .pull-left[
 **Flat File**   
 &lt;br&gt;
-&lt;br&gt;
-self-contained   
- 
-]]
+* self-contained   
+* may duplicate information
+]
+]
 
 --
+
 .big[
 .pull-right[
-**Relational Data Tables**  
-
-links to other tables
-
+**Relational Data Tables**
+* can be many tables
+* connected keys (relations)
 ]
 ]
+
+---
+class: center, middle, inverse
+
+# A tale of four tables...
 
 
 ---
+  
+Person:
+* Person ID
+* Race
+* Ethnicity
+* Sex
+* Financial Class
+
+Encounter:
+* Person ID
+* Encounter ID
+* Days from DOB to encounter
+* Encounter Type
+* Department Name
+
+Diagnoses:
+* Persion ID
+* Encounter ID
+* Code
+* Code Description
+* Source
+* Days from DOB to ICD Code
+
+Inpatients Meds:
+
+
+---
+
 class:center, middle
 &lt;strong&gt;
 &lt;blockquote class="twitter-tweet"&gt;
