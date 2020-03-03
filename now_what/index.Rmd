@@ -1,28 +1,53 @@
 ---
-title: "I have my data - now what?"
+title: "i have my data..."
+subtitle: "NOW WHAT?"
 author: "Caroline Ledbetter"
-date: "`r Sys.Date()`"
+date: "`r paste(Sys.Date())`"
 output: 
   xaringan::moon_reader:
-    css: ["default", "default-fonts", "../css/all.min.css", "../css/footer.css"]
+    css: ["default", "default-fonts", "../css/all.min.css", "../css/custom.css"]
     nature:
       highlightStyle: github
       highlightLines: true
+    seal: false
 params:
   slides: "now_what/"
   github: "now_what"
 ---
+class: title-slide, center, middle
+background-image: 
+background-size: contain
+background-color:black
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      collapse = TRUE,
+                      fig.retina = 3)
+#library(tidyverse) # load tidyverse package
+#load(file = 'demo_data.Rdata')
+```
+
+
+## `r rmarkdown::metadata$title`
+# `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+### `r Sys.Date()` 
+
+#### <i class="fas fa-images"></i> `r paste0('https://slides.carolineledbetter.us/', params$slides)` 
+<i class="fab fa-github-square"></i> `r paste0('https://github.com/ledbettc/slides/tree/master/', params$github)`
+---
 class:middle
 name: details
-.big[
-<i class="fas fa-images"></i>
-`r paste0('https://slides.carolineledbetter.us/', params$slides)`  
-<i class="fab fa-github-square"></i>
-`r paste0('https://github.com/ledbettc/slides/tree/master/', params$github)`
-]
+<!-- edit slides and github repo in the YAML above -->
 
+.intro[
 #Find me at: 
-.pull-right[
+]
+.intro-right[
 <i class = "fas fa-globe"></i> carolineledbetter.us  
 <i class = "far fa-envelope"></i>
 carolineledbetter@yahoo.com  
@@ -31,19 +56,14 @@ carolineledbetter@yahoo.com
 <i class="fab fa-twitter"></i>
 @C_line_sealion
 ]
+
 ---
 layout: true
-<!-- edit slides and repo in the YAML above -->
+background-image: 
+background-size: contain
 .footer[`r paste0('https://slides.carolineledbetter.us/', params$slides)`]
 ---
 class:center, top
-
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-library(tidyverse) # load tidyverse package
-load(file = 'demo_data.Rdata')
-```
 
 #**Flat File vs Relational Data Tables**  
 
@@ -60,82 +80,27 @@ load(file = 'demo_data.Rdata')
 
 ]
 ---
-```{r, highlight.output = 3:4}
-spinal_encounters %>% 
-  glimpse
-```
+class:center, middle
+<strong>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">“EDA is never done. You just die” as 
+<a href="https://twitter.com/RohanAlexander?ref_src=twsrc%5Etfw">@RohanAlexander</a> 
+told an unsuspecting student <a href="https://t.co/0Lt8LRpkg7">https://t.co/0Lt8LRpkg7</a>
+</p>
+&mdash; Monica Alexander (@monjalexander) 
+<a href="https://twitter.com/monjalexander/status/1234112608837537792?ref_src=twsrc%5Etfw">March 1, 2020</a>
+</blockquote> 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</strong> 
 
 ---
+layout:false
 
-```{r, highlight.output = 3}
-spinal_patients %>% 
-  glimpse
-```
+#Resources:   
 
+.resources[
+]
 ---
-
-```{r, highlight.output = 3:4}
-all_enc_spinal_pts %>% 
-  glimpse
-```
-
----
-
-```{r, highlight.output = 3:4}
-allergy %>% 
-  glimpse
-```
-
----
-
-```{r, highlight.output = 3}
-allergy_class %>% 
-  glimpse
-```
-
----
-
-```{r, , highlight.output = 3:4}
-inpatient_meds %>% 
-  glimpse
-```
-
----
-
-```{r}
-spinal_encounters %>% 
-  count(encounter_type)
-
-spinal_encounters %>% 
-  count(department_name) %>% 
-  arrange(desc(n))
-```
-
----
-
-```{r, highlight.output = 2}
-allergy %>% 
-  count(person_id) %>% 
-  arrange(desc(n))
-```
-
----
-```{r}
-allergy %>% 
-  left_join(allergy_class) %>% 
-  group_by(person_id) %>% 
-  summarise(drug_allergy = any(drug), 
-            num_drug_allergy = sum(drug))
-```
-
----
-```{r}
-inpatient_meds %>% 
-  filter(opioid)
-```
-
----
-[Details](#details)
-
-
+<!-- last slide go back to details slide -->
+#[Return to Contact Info](#details)
 

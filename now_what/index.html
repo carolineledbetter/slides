@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>I have my data - now what?</title>
+    <title>i have my data…</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-02-15" />
+    <meta name="date" content="2020-03-03" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/all.min.css" type="text/css" />
-    <link rel="stylesheet" href="../css/footer.css" type="text/css" />
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# I have my data - now what?
+class: title-slide, center, middle
+background-image: 
+background-size: contain
+background-color:black
+
+
+
+
+## i have my data...
+# NOW WHAT?
+
 ### Caroline Ledbetter
-### 2020-02-15
 
+### 2020-03-03 
+
+#### &lt;i class="fas fa-images"&gt;&lt;/i&gt; https://slides.carolineledbetter.us/now_what/ 
+&lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tree/master/now_what
 ---
-
 class:middle
 name: details
-.big[
-&lt;i class="fas fa-images"&gt;&lt;/i&gt;
-https://slides.carolineledbetter.us/now_what/  
-&lt;i class="fab fa-github-square"&gt;&lt;/i&gt;
-https://github.com/ledbettc/slides/tree/master/now_what
-]
+&lt;!-- edit slides and github repo in the YAML above --&gt;
 
+.intro[
 #Find me at: 
-.pull-right[
+]
+.intro-right[
 &lt;i class = "fas fa-globe"&gt;&lt;/i&gt; carolineledbetter.us  
 &lt;i class = "far fa-envelope"&gt;&lt;/i&gt;
 carolineledbetter@yahoo.com  
@@ -39,14 +47,14 @@ carolineledbetter@yahoo.com
 &lt;i class="fab fa-twitter"&gt;&lt;/i&gt;
 @C_line_sealion
 ]
+
 ---
 layout: true
-&lt;!-- edit slides and repo in the YAML above --&gt;
+background-image: 
+background-size: contain
 .footer[https://slides.carolineledbetter.us/now_what/]
 ---
 class:center, top
-
-
 
 #**Flat File vs Relational Data Tables**  
 
@@ -63,92 +71,29 @@ class:center, top
 
 ]
 ---
-
-```r
-spinal_encounters %&gt;% 
-  glimpse
-```
-
----
-
-
-```r
-spinal_patients %&gt;% 
-  glimpse
-```
-
----
-
-
-```r
-all_enc_spinal_pts %&gt;% 
-  glimpse
-```
+class:center, middle
+&lt;strong&gt;
+&lt;blockquote class="twitter-tweet"&gt;
+&lt;p lang="en" dir="ltr"&gt;“EDA is never done. You just die” as 
+&lt;a href="https://twitter.com/RohanAlexander?ref_src=twsrc%5Etfw"&gt;@RohanAlexander&lt;/a&gt; 
+told an unsuspecting student &lt;a href="https://t.co/0Lt8LRpkg7"&gt;https://t.co/0Lt8LRpkg7&lt;/a&gt;
+&lt;/p&gt;
+&amp;mdash; Monica Alexander (@monjalexander) 
+&lt;a href="https://twitter.com/monjalexander/status/1234112608837537792?ref_src=twsrc%5Etfw"&gt;March 1, 2020&lt;/a&gt;
+&lt;/blockquote&gt; 
+&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+&lt;/strong&gt; 
 
 ---
+layout:false
 
+#Resources:   
 
-```r
-allergy %&gt;% 
-  glimpse
-```
-
+.resources[
+]
 ---
-
-
-```r
-allergy_class %&gt;% 
-  glimpse
-```
-
----
-
-
-```r
-inpatient_meds %&gt;% 
-  glimpse
-```
-
----
-
-
-```r
-spinal_encounters %&gt;% 
-  count(encounter_type)
-
-spinal_encounters %&gt;% 
-  count(department_name) %&gt;% 
-  arrange(desc(n))
-```
-
----
-
-
-```r
-allergy %&gt;% 
-  count(person_id) %&gt;% 
-  arrange(desc(n))
-```
-
----
-
-```r
-allergy %&gt;% 
-  left_join(allergy_class) %&gt;% 
-  group_by(person_id) %&gt;% 
-  summarise(drug_allergy = any(drug), 
-            num_drug_allergy = sum(drug))
-```
-
----
-
-```r
-inpatient_meds %&gt;% 
-  filter(opioid)
-```
-
----
-[Details](#details)
+&lt;!-- last slide go back to details slide --&gt;
+#[Return to Contact Info](#details)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
