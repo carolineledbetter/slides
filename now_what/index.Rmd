@@ -65,20 +65,71 @@ background-size: contain
 ---
 class:center, top
 
-#**Flat File vs Relational Data Tables**  
+.header[**The Data Analysis Plan**]
 
+--
+
+.left[
+.big[
+**Exposure:**  
+{{content}}
+]
+]
+
+--
+
+Multiple Drug Intolerance Syndrome  
+{{content}}
+
+--
+
+**Outcome:**
+{{content}}
+
+--
+
+Chronic Pain  
+{{content}}
+
+--
+
+**Covariates:**  
+{{content}}
+
+--
+
+Race, Ethnicity, Sex, Financial Class
+{{content}}
+
+---
+# Sample Plan  
+
+https://slides.carolineledbetter.us/now_what/img/data_analysis_plan.pdf
+
+---
+class:top
+
+.header[ .center[**Flat File vs Relational Data Tables**]  ]
+.big[
 .pull-left[
-#**Flat File**  
-#self-contained    
+**Flat File**   
+<br>
+<br>
+self-contained   
  
-]
+]]
 
+--
+.big[
 .pull-right[
-#**Relational Data Tables**  
+**Relational Data Tables**  
 
-#links to other tables
+links to other tables
 
 ]
+]
+
+
 ---
 class:center, middle
 <strong>

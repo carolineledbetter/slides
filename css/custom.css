@@ -1,3 +1,4 @@
+
 .footer {
     color: black;
     position: fixed;
@@ -38,4 +39,14 @@ blockquote {
 .resources {
   font-size: 150%;
   padding-bottom: 3em;
+}
+
+.header {
+  text-align: center;
+  font-size: 200% !important;
+  padding-bottom: 1em;
+}
+
+.big{ /*Change made here*/
+  font-size: 175% !important;
 }
