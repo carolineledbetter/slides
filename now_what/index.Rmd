@@ -30,7 +30,6 @@ library(kableExtra)
 load(file = 'data/demo.RData')
 ```
 
-
 ## `r rmarkdown::metadata$title`
 # `r rmarkdown::metadata$subtitle`
 
@@ -232,17 +231,67 @@ spinal_visits %>%
 ---
 
 ```{r}
+spinal_visits %>% 
+  filter(is.na(as.numeric(days_from_dob_toencounter))) %>% 
+  select(-DepartmentName) %>% 
+  slice(1:5) %>% 
+  kable() %>% 
+  kable_styling(full_width = F) 
+```
+
+---
+
+```{r}
 allergy %>% 
   add_count(person_id) %>% 
   arrange(person_id) %>% 
   filter(n == 2) %>% 
+  slice(7:16) %>% 
   kable() %>% 
   kable_styling() %>% 
-  collapse_rows(1) %>% 
-  scroll_box(height = '200px')
+  collapse_rows(1)
 ```
 
 ---
+
+```{r, iecho  = FALSE}
+inpatient_meds %>% glimpse
+```
+
+---
+
+```{r, echo = FALSE}
+# missing data for inpatient meds
+inpatient_meds %>% 
+  summarise_all(~ scales::percent(sum(is.na(.))/n(), accuracy = 0.001)) %>% 
+  pivot_longer(cols = everything(), names_to = 'variable', 
+               values_to = 'percent_missing') %>% 
+  kable() %>% 
+  kable_styling(full_width = FALSE)
+```
+
+---
+
+```{r icd_chronic_codes, echo = FALSE}
+dx %>% 
+  filter(str_detect(code, '^338\\.[24]')) %>% 
+  count(code, code_description) %>% 
+  kable() %>% 
+  kable_styling(full_width = FALSE)
+```
+
+-----
+
+```{r, echo = FALSE}
+dx %>% 
+  filter(str_detect(code, '^G89\\.[24]')) %>% 
+  count(code, code_description) %>% 
+  kable() %>% 
+  kable_styling(full_width = FALSE)
+```
+
+---
+
 
 #Resources:   
 
