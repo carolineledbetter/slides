@@ -25,8 +25,9 @@ knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE, 
                       collapse = TRUE,
                       fig.retina = 3)
-#library(tidyverse) # load tidyverse package
-#load(file = 'demo_data.Rdata')
+library(tidyverse) # load tidyverse package
+library(kableExtra)
+load(file = 'data/demo.RData')
 ```
 
 
@@ -156,39 +157,56 @@ class:top
 ---
 class: center, middle, inverse
 
-# A tale of four tables...
+# A tale of five tables...
 
 
 ---
-  
-Person:
-* Person ID
-* Race
-* Ethnicity
-* Sex
-* Financial Class
+class:center  
 
-Encounter:
-* Person ID
-* Encounter ID
-* Days from DOB to encounter
-* Encounter Type
-* Department Name
-
-Diagnoses:
-* Persion ID
-* Encounter ID
-* Code
-* Code Description
-* Source
-* Days from DOB to ICD Code
-
-Inpatients Meds:
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics('img/five_tbls.png')
+```
 
 
 ---
+class:center    
 
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics('img/five_tbls_no_dups.png')
+```
+
+
+---
+class:center    
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics('img/joins.png')
+```
+
+
+---
+class: center
+
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics('img/iu.jpg')
+```
+
+
+---
+class: center
+
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics('img/full_join1.png')
+```
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics('img/full_join2.png')
+```
+---
 class:center, middle
+
 <strong>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">“EDA is never done. You just die” as 
@@ -202,7 +220,29 @@ told an unsuspecting student <a href="https://t.co/0Lt8LRpkg7">https://t.co/0Lt8
 </strong> 
 
 ---
-layout:false
+
+```{r}
+spinal_visits %>% 
+  count(person_id) %>% 
+  count(`No. of Spinal Encounters` = n, name = 'No. of Pts') %>% 
+  kable() %>% 
+  kable_styling(full_width = F)
+```
+
+---
+
+```{r}
+allergy %>% 
+  add_count(person_id) %>% 
+  arrange(person_id) %>% 
+  filter(n == 2) %>% 
+  kable() %>% 
+  kable_styling() %>% 
+  collapse_rows(1) %>% 
+  scroll_box(height = '200px')
+```
+
+---
 
 #Resources:   
 

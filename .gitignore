@@ -4,4 +4,4 @@
 .Ruserdata
 *.RData
 *.rda
-!*/data/*
+!german_credit.rda
