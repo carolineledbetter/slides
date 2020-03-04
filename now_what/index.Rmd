@@ -50,7 +50,7 @@ name: details
 .intro-right[
 <i class = "fas fa-globe"></i> carolineledbetter.us  
 <i class = "far fa-envelope"></i>
-carolineledbetter@yahoo.com  
+caroline.ledbetter@cuanscutz.edu  
 <i class="fab fa-github"></i>
  @ledbettc  
 <i class="fab fa-twitter"></i>
@@ -271,7 +271,10 @@ inpatient_meds %>%
 ```
 
 ---
+class:center
 
+# Diagnostic Tables
+### ICD 9  
 ```{r icd_chronic_codes, echo = FALSE}
 dx %>% 
   filter(str_detect(code, '^338\\.[24]')) %>% 
@@ -280,8 +283,7 @@ dx %>%
   kable_styling(full_width = FALSE)
 ```
 
------
-
+### ICD 10  
 ```{r, echo = FALSE}
 dx %>% 
   filter(str_detect(code, '^G89\\.[24]')) %>% 
