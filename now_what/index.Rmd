@@ -67,6 +67,9 @@ class:center, top
 
 .header[**The Data Analysis Plan**]
 
+???
+First thing we need is a well defined analysis. A clear research question 
+with an exposure and an outcome. 
 --
 
 .left[
@@ -121,6 +124,11 @@ Chronic Pain
 Race, Ethnicity, Sex, Financial Class
 {{content}}
 
+???
+What are our covariates? 
+The better/more completely these are 
+defined in advance the easier our life will be later. This will allow us to 
+forsee potientinal issues, limitations, extra variables and biases. 
 ---
 class: inverse, center
 # Sample Plan  
@@ -166,7 +174,8 @@ class:center
 knitr::include_graphics('img/five_tbls.png')
 ```
 
-
+??? 
+Relational tables are linked by 
 ---
 class:center    
 
@@ -174,7 +183,12 @@ class:center
 knitr::include_graphics('img/five_tbls_no_dups.png')
 ```
 
-
+???
+For a true relational database, information is not duplicated - why the 
+person id and not the encounter id. There is a one to many relationship 
+between person and encounter (an person may have multiple encounters, but
+an encounter cannot have multiple people ). Removing the encounter id would 
+not allow us to relink it (there are mutliple encounters for every person id)
 ---
 class:center    
 
@@ -189,6 +203,19 @@ class: center
 
 ```{r, echo = FALSE, out.width = "70%"}
 knitr::include_graphics('img/iu.jpg')
+```
+
+---
+
+```{r, include = FALSE}
+options(tibble.print_max = 2)
+```
+
+```{r, R.options = "tibble.print_max = 2"}
+full_join(patient, inpatient_meds)
+
+full_join(patient, inpatient_meds) %>% 
+  full_join(dx)
 ```
 
 
@@ -226,6 +253,13 @@ spinal_visits %>%
   count(`No. of Spinal Encounters` = n, name = 'No. of Pts') %>% 
   kable() %>% 
   kable_styling(full_width = F)
+```
+
+---
+class: center
+
+```{r, echo = FALSE, out.width = "80%"}
+knitr::include_graphics('img/keep_calm.png')
 ```
 
 ---

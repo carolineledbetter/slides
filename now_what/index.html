@@ -4,7 +4,7 @@
     <title>i have my data…</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-03-04" />
+    <meta name="date" content="2020-03-10" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <script src="index_files/kePrint/kePrint.js"></script>
@@ -26,7 +26,7 @@ background-color:black
 
 ### Caroline Ledbetter
 
-### 2020-03-04 
+### 2020-03-10 
 
 #### &lt;i class="fas fa-images"&gt;&lt;/i&gt; https://slides.carolineledbetter.us/now_what/ 
 &lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tree/master/now_what
@@ -58,6 +58,9 @@ class:center, top
 
 .header[**The Data Analysis Plan**]
 
+???
+First thing we need is a well defined analysis. A clear research question 
+with an exposure and an outcome. 
 --
 
 .left[
@@ -112,6 +115,11 @@ Chronic Pain
 Race, Ethnicity, Sex, Financial Class
 {{content}}
 
+???
+What are our covariates? 
+The better/more completely these are 
+defined in advance the easier our life will be later. This will allow us to 
+forsee potientinal issues, limitations, extra variables and biases. 
 ---
 class: inverse, center
 # Sample Plan  
@@ -155,13 +163,19 @@ class:center
 
 &lt;img src="img/five_tbls.png" width="90%" /&gt;
 
-
+??? 
+Relational tables are linked by 
 ---
 class:center    
 
 &lt;img src="img/five_tbls_no_dups.png" width="90%" /&gt;
 
-
+???
+For a true relational database, information is not duplicated - why the 
+person id and not the encounter id. There is a one to many relationship 
+between person and encounter (an person may have multiple encounters, but
+an encounter cannot have multiple people ). Removing the encounter id would 
+not allow us to relink it (there are mutliple encounters for every person id)
 ---
 class:center    
 
@@ -173,6 +187,50 @@ class: center
 
 
 &lt;img src="img/iu.jpg" width="70%" /&gt;
+
+---
+
+
+
+
+```r
+full_join(patient, inpatient_meds)
+## # A tibble: 200,757 x 31
+##    person_id Race  Ethnicity Sex   FinancialClass zip   age_asof_201601… marijuana_usage… marijuana_dx_hx encounter_id Name  GenericName Strength OrderName Route Frequency
+##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    
+##  1 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  2 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  3 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
+##  4 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87763668044 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
+##  5 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87763668044 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
+##  6 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  7 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  8 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102815382411 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
+##  9 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102858570038 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
+## 10 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102815382411 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
+## # … with 200,747 more rows, and 15 more variables: MinimumDose &lt;dbl&gt;, MaximumDose &lt;dbl&gt;, CalculatedMinimumDose &lt;dbl&gt;, CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;,
+## #   CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;, admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;, admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;, days_from_dob_toprescription &lt;chr&gt;,
+## #   days_from_dob_torelease &lt;chr&gt;, days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;
+
+full_join(patient, inpatient_meds) %&gt;% 
+  full_join(dx)
+## # A tibble: 6,297,064 x 35
+##    person_id Race  Ethnicity Sex   FinancialClass zip   age_asof_201601… marijuana_usage… marijuana_dx_hx encounter_id Name  GenericName Strength OrderName Route Frequency
+##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    
+##  1 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  2 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  3 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  4 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  5 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  6 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  7 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  8 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+##  9 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+## 10 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
+## # … with 6,297,054 more rows, and 19 more variables: MinimumDose &lt;dbl&gt;, MaximumDose &lt;dbl&gt;, CalculatedMinimumDose &lt;dbl&gt;, CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;,
+## #   CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;, admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;, admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;, days_from_dob_toprescription &lt;chr&gt;,
+## #   days_from_dob_torelease &lt;chr&gt;, days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;, code &lt;chr&gt;, code_description &lt;chr&gt;, provenance &lt;chr&gt;, days_from_dob_to_icdcode &lt;chr&gt;
+```
 
 
 ---
@@ -234,6 +292,11 @@ spinal_visits %&gt;%
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+---
+class: center
+
+&lt;img src="img/keep_calm.png" width="80%" /&gt;
 
 ---
 
