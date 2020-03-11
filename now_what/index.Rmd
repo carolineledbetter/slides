@@ -174,8 +174,8 @@ class:center
 knitr::include_graphics('img/five_tbls.png')
 ```
 
-??? 
-Relational tables are linked by 
+???
+Relational tables are linked by keys, here person id and encounter id. 
 ---
 class:center    
 
@@ -196,6 +196,22 @@ class:center
 knitr::include_graphics('img/joins.png')
 ```
 
+???
+A full join returns all rows and columns from both x and y. Where there are not
+mmatching values it creates missing data. 
+A left join returns all ROWS from x and all columns from x and y.
+A right join is just a left join with x and y reversed. 
+An inner join returns all rows that are common to x and y (are matched) and 
+all columns from x and y. 
+
+For all of the above if there are multiple matches in x and y it will return 
+all combinations. 
+
+An anti join returns rows from x that are not in y, with just columns from x. 
+This can be useful when you are using a second table as an exclusion criteria.
+
+Not shown: a semi join returns all rows in x that match y but just columns from
+x. A semi-join will not duplicate rows in x. 
 
 ---
 class: center
@@ -217,14 +233,15 @@ knitr::include_graphics('img/full_join1.png')
 knitr::include_graphics('img/full_join2.png')
 ```
 
-??? 
+???
 Anytime there is duplicate information, you increase your chance of errors. 
 Joining two tables with multiple by columns can sometimes have unintended
 consequences. 
 
 ---
-```{r, echo = FALSE, out.width = "70%"}
-knitr::include_graphics('img/flat_table.jpg')
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics('img/flat_table.png')
 ```
 
 ???
@@ -237,6 +254,9 @@ like the number of males or worse the number of people with a certain dx code!
 ---
 class:center, middle
 
+.big[**"Exploratory Data Analysis"**]
+*******
+
 <strong>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">“EDA is never done. You just die” as 
@@ -248,6 +268,11 @@ told an unsuspecting student <a href="https://t.co/0Lt8LRpkg7">https://t.co/0Lt8
 </blockquote> 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </strong> 
+
+???
+Once you recieve your data the MOST important step is the exploratory 
+data analysis. It is important to create plots, descriptives, frequency tables
+etc. to see if what is in your data is what you expect. 
 
 ---
 
@@ -277,6 +302,11 @@ spinal_visits %>%
   kable_styling(full_width = F) 
 ```
 
+???
+days from dob to encounter is a charachter vector - why? 
+Because compass censors days from dob over 89 years for PHI reasons
+if we just convert this to a numeric we will create missing data 
+that is NOT missing at random. 
 ---
 
 ```{r}
@@ -290,12 +320,18 @@ allergy %>%
   collapse_rows(1)
 ```
 
+???
+some of these are different descriptions of the same drug - 
+how do we deal with that
 ---
 
 ```{r, iecho  = FALSE}
 inpatient_meds %>% glimpse
 ```
 
+
+???
+we can see right off the bat that we have lots of missing data. 
 ---
 
 ```{r, echo = FALSE}
@@ -308,6 +344,9 @@ inpatient_meds %>%
   kable_styling(full_width = FALSE)
 ```
 
+???
+A lot of missing data, will have to decide how we want to deal with this, 
+some variables we probably shouldn't use. 
 ---
 class:center
 
@@ -329,6 +368,12 @@ dx %>%
   kable() %>% 
   kable_styling(full_width = FALSE)
 ```
+
+
+???
+was not expecting both icd 9 and 10 - should we use both, 
+it is not trivial to convert.
+something to consider when setting time frames as well
 
 ---
 

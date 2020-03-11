@@ -163,8 +163,8 @@ class:center
 
 &lt;img src="img/five_tbls.png" width="90%" /&gt;
 
-??? 
-Relational tables are linked by 
+???
+Relational tables are linked by keys, here person id and encounter id. 
 ---
 class:center    
 
@@ -181,6 +181,22 @@ class:center
 
 &lt;img src="img/joins.png" width="100%" /&gt;
 
+???
+A full join returns all rows and columns from both x and y. Where there are not
+mmatching values it creates missing data. 
+A left join returns all ROWS from x and all columns from x and y.
+A right join is just a left join with x and y reversed. 
+An inner join returns all rows that are common to x and y (are matched) and 
+all columns from x and y. 
+
+For all of the above if there are multiple matches in x and y it will return 
+all combinations. 
+
+An anti join returns rows from x that are not in y, with just columns from x. 
+This can be useful when you are using a second table as an exclusion criteria.
+
+Not shown: a semi join returns all rows in x that match y but just columns from
+x. A semi-join will not duplicate rows in x. 
 
 ---
 class: center
@@ -196,13 +212,14 @@ class: center
 
 &lt;img src="img/full_join2.png" width="70%" /&gt;
 
-??? 
+???
 Anytime there is duplicate information, you increase your chance of errors. 
 Joining two tables with multiple by columns can sometimes have unintended
 consequences. 
 
 ---
-&lt;img src="img/flat_table.jpg" width="70%" /&gt;
+
+&lt;img src="img/flat_table.png" width="100%" /&gt;
 
 ???
 If you were to put these three tables into a flat table there 
@@ -213,6 +230,9 @@ like the number of males or worse the number of people with a certain dx code!
 
 ---
 class:center, middle
+
+.big[**"Exploratory Data Analysis"**]
+*******
 
 &lt;strong&gt;
 &lt;blockquote class="twitter-tweet"&gt;
@@ -225,6 +245,11 @@ told an unsuspecting student &lt;a href="https://t.co/0Lt8LRpkg7"&gt;https://t.c
 &lt;/blockquote&gt; 
 &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
 &lt;/strong&gt; 
+
+???
+Once you recieve your data the MOST important step is the exploratory 
+data analysis. It is important to create plots, descriptives, frequency tables
+etc. to see if what is in your data is what you expect. 
 
 ---
 
@@ -324,6 +349,11 @@ spinal_visits %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+???
+days from dob to encounter is a charachter vector - why? 
+Because compass censors days from dob over 89 years for PHI reasons
+if we just convert this to a numeric we will create missing data 
+that is NOT missing at random. 
 ---
 
 
@@ -400,6 +430,9 @@ allergy %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+???
+some of these are different descriptions of the same drug - 
+how do we deal with that
 ---
 
 
@@ -407,31 +440,34 @@ allergy %&gt;%
 inpatient_meds %&gt;% glimpse
 ## Observations: 200,755
 ## Variables: 23
-## $ person_id                      [3m[90m&lt;chr&gt;[39m[23m "4382190347", "1845308846", "4655261700", "4663699839", "4962729560", "4606120152", "4895026014", "4180588937", "4654095910", "4521545097…
-## $ encounter_id                   [3m[90m&lt;dbl&gt;[39m[23m 82514221932, 100218876798, 78005577669, 81601734237, 102279099306, 94597559168, 92036299124, 97769174775, 78125922994, 107579332618, 8809…
-## $ Name                           [3m[90m&lt;chr&gt;[39m[23m "OXYCODONE ER 20 MG TABLET,CRUSH RESISTANT,EXTENDED RELEASE 12 HR", "HYDROCODONE 7.5 MG-ACETAMINOPHEN 325 MG/15 ML ORAL SOLUTION", "FENTA…
-## $ GenericName                    [3m[90m&lt;chr&gt;[39m[23m "oxyCODONE ER 20 mg tablet,crush resistant,extended release 12 hr", "HYDROcodone 7.5 mg-acetaminophen 325 mg/15 mL oral solution", NA, "H…
-## $ Strength                       [3m[90m&lt;chr&gt;[39m[23m "20 mg", "7.5-325 mg/15 mL", NA, "1 mg/mL", "300-30 mg", "20 mg", "6 mg/30 mL", "1 mg/mL", NA, "10-100 mg/5 mL", "20 mg", "40 mg", "100 m…
-## $ OrderName                      [3m[90m&lt;chr&gt;[39m[23m "oxyCODONE (OXYCONTIN) 12 hr tablet 40 mg", "HYDROcodone-acetaminophen (HYCET) 2.5-108 mg/5 mL ORAL solution 10-15 mL 10-15 mL", "fentany…
-## $ Route                          [3m[90m&lt;chr&gt;[39m[23m "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
-## $ Frequency                      [3m[90m&lt;chr&gt;[39m[23m "2 TIMES DAILY", "EVERY 6 HOURS PRN", "CONTINUOUS", "PRN", "EVERY 4 HOURS PRN", "EVERY 12 HOURS SCHEDULED", "CONTINUOUS PRN", "PRN", "CON…
-## $ MinimumDose                    [3m[90m&lt;dbl&gt;[39m[23m 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 0.…
-## $ MaximumDose                    [3m[90m&lt;dbl&gt;[39m[23m NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ CalculatedMinimumDose          [3m[90m&lt;dbl&gt;[39m[23m 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 6.…
-## $ CalculatedMaximumDose          [3m[90m&lt;dbl&gt;[39m[23m NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ DoseUnit                       [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
-## $ CalculatedDoseUnit             [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
-## $ NumberOfDoses                  [3m[90m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ admin_dose                     [3m[90m&lt;dbl&gt;[39m[23m 40.00, 15.00, NA, 1.00, 2.00, 20.00, NA, 1.00, NA, 5.00, 20.00, 80.00, 200.00, NA, 5.00, 2.00, 20.00, 15.00, 0.50, 20.00, 40.00, 20.00, 2…
-## $ admin_dose_unit                [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, "mg", "tablet", "mg", NA, "mg", NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg…
-## $ admin_route                    [3m[90m&lt;chr&gt;[39m[23m "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
-## $ DepartmentName                 [3m[90m&lt;chr&gt;[39m[23m "MHC NEUROSCIENCE UNIT", "MCR REHAB UNIT", "MCR ORTHO/NEURO UNIT", "MHN OPERATING ROOM", "AMC ORTHO UNIT", "AMC BMT/ONC UNIT", "PVH NEURO…
-## $ days_from_dob_toprescription   [3m[90m&lt;chr&gt;[39m[23m "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
-## $ days_from_dob_torelease        [3m[90m&lt;chr&gt;[39m[23m "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
-## $ days_from_dob_toadministration [3m[90m&lt;chr&gt;[39m[23m "28515", "8384", "11216", "17047", "30029", "24396", "25862", "23728", "26279", "25481", "18887", "18646", "22432", "25043", "9371", "237…
-## $ admin_time                     [3m[90m&lt;time&gt;[39m[23m 20:01:00, 05:11:00, 21:57:00, 17:50:00, 09:43:00, 19:57:00, 23:35:00, 16:52:00, 12:11:00, 14:15:00, 05:20:00, 08:04:00, 21:02:00, 18:54:…
+## $ person_id                      &lt;chr&gt; "4382190347", "1845308846", "4655261700", "4663699839", "4962729560", "4606120152", "4895026014", "4180588937", "4654095910", "4521545097…
+## $ encounter_id                   &lt;dbl&gt; 82514221932, 100218876798, 78005577669, 81601734237, 102279099306, 94597559168, 92036299124, 97769174775, 78125922994, 107579332618, 8809…
+## $ Name                           &lt;chr&gt; "OXYCODONE ER 20 MG TABLET,CRUSH RESISTANT,EXTENDED RELEASE 12 HR", "HYDROCODONE 7.5 MG-ACETAMINOPHEN 325 MG/15 ML ORAL SOLUTION", "FENTA…
+## $ GenericName                    &lt;chr&gt; "oxyCODONE ER 20 mg tablet,crush resistant,extended release 12 hr", "HYDROcodone 7.5 mg-acetaminophen 325 mg/15 mL oral solution", NA, "H…
+## $ Strength                       &lt;chr&gt; "20 mg", "7.5-325 mg/15 mL", NA, "1 mg/mL", "300-30 mg", "20 mg", "6 mg/30 mL", "1 mg/mL", NA, "10-100 mg/5 mL", "20 mg", "40 mg", "100 m…
+## $ OrderName                      &lt;chr&gt; "oxyCODONE (OXYCONTIN) 12 hr tablet 40 mg", "HYDROcodone-acetaminophen (HYCET) 2.5-108 mg/5 mL ORAL solution 10-15 mL 10-15 mL", "fentany…
+## $ Route                          &lt;chr&gt; "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
+## $ Frequency                      &lt;chr&gt; "2 TIMES DAILY", "EVERY 6 HOURS PRN", "CONTINUOUS", "PRN", "EVERY 4 HOURS PRN", "EVERY 12 HOURS SCHEDULED", "CONTINUOUS PRN", "PRN", "CON…
+## $ MinimumDose                    &lt;dbl&gt; 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 0.…
+## $ MaximumDose                    &lt;dbl&gt; NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ CalculatedMinimumDose          &lt;dbl&gt; 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 6.…
+## $ CalculatedMaximumDose          &lt;dbl&gt; NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ DoseUnit                       &lt;chr&gt; "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
+## $ CalculatedDoseUnit             &lt;chr&gt; "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
+## $ NumberOfDoses                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ admin_dose                     &lt;dbl&gt; 40.00, 15.00, NA, 1.00, 2.00, 20.00, NA, 1.00, NA, 5.00, 20.00, 80.00, 200.00, NA, 5.00, 2.00, 20.00, 15.00, 0.50, 20.00, 40.00, 20.00, 2…
+## $ admin_dose_unit                &lt;chr&gt; "mg", "mL", NA, "mg", "tablet", "mg", NA, "mg", NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg…
+## $ admin_route                    &lt;chr&gt; "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
+## $ DepartmentName                 &lt;chr&gt; "MHC NEUROSCIENCE UNIT", "MCR REHAB UNIT", "MCR ORTHO/NEURO UNIT", "MHN OPERATING ROOM", "AMC ORTHO UNIT", "AMC BMT/ONC UNIT", "PVH NEURO…
+## $ days_from_dob_toprescription   &lt;chr&gt; "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
+## $ days_from_dob_torelease        &lt;chr&gt; "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
+## $ days_from_dob_toadministration &lt;chr&gt; "28515", "8384", "11216", "17047", "30029", "24396", "25862", "23728", "26279", "25481", "18887", "18646", "22432", "25043", "9371", "237…
+## $ admin_time                     &lt;time&gt; 20:01:00, 05:11:00, 21:57:00, 17:50:00, 09:43:00, 19:57:00, 23:35:00, 16:52:00, 12:11:00, 14:15:00, 05:20:00, 08:04:00, 21:02:00, 18:54:…
 ```
 
+
+???
+we can see right off the bat that we have lots of missing data. 
 ---
 
 &lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
@@ -537,6 +573,9 @@ inpatient_meds %&gt;% glimpse
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+???
+A lot of missing data, will have to decide how we want to deal with this, 
+some variables we probably shouldn't use. 
 ---
 class:center
 
@@ -601,6 +640,12 @@ class:center
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+
+???
+was not expecting both icd 9 and 10 - should we use both, 
+it is not trivial to convert.
+something to consider when setting time frames as well
 
 ---
 
