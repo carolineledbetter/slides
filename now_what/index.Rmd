@@ -206,20 +206,6 @@ knitr::include_graphics('img/iu.jpg')
 ```
 
 ---
-
-```{r, include = FALSE}
-options(tibble.print_max = 2)
-```
-
-```{r, R.options = "tibble.print_max = 2"}
-full_join(patient, inpatient_meds)
-
-full_join(patient, inpatient_meds) %>% 
-  full_join(dx)
-```
-
-
----
 class: center
 
 
@@ -230,6 +216,24 @@ knitr::include_graphics('img/full_join1.png')
 ```{r, echo = FALSE, out.width = "70%"}
 knitr::include_graphics('img/full_join2.png')
 ```
+
+??? 
+Anytime there is duplicate information, you increase your chance of errors. 
+Joining two tables with multiple by columns can sometimes have unintended
+consequences. 
+
+---
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics('img/flat_table.jpg')
+```
+
+???
+If you were to put these three tables into a flat table there 
+would be 
+over 6 million lines. Think about all the duplicate information 
+that is in this table and how hard it would be to get out simple information
+like the number of males or worse the number of people with a certain dx code!
+
 ---
 class:center, middle
 

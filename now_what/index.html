@@ -4,7 +4,7 @@
     <title>i have my data…</title>
     <meta charset="utf-8" />
     <meta name="author" content="Caroline Ledbetter" />
-    <meta name="date" content="2020-03-10" />
+    <meta name="date" content="2020-03-11" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
     <link href="index_files/remark-css/default-fonts.css" rel="stylesheet" />
     <script src="index_files/kePrint/kePrint.js"></script>
@@ -26,7 +26,7 @@ background-color:black
 
 ### Caroline Ledbetter
 
-### 2020-03-10 
+### 2020-03-11 
 
 #### &lt;i class="fas fa-images"&gt;&lt;/i&gt; https://slides.carolineledbetter.us/now_what/ 
 &lt;i class="fab fa-github-square"&gt;&lt;/i&gt; https://github.com/ledbettc/slides/tree/master/now_what
@@ -189,57 +189,28 @@ class: center
 &lt;img src="img/iu.jpg" width="70%" /&gt;
 
 ---
-
-
-
-
-```r
-full_join(patient, inpatient_meds)
-## # A tibble: 200,757 x 31
-##    person_id Race  Ethnicity Sex   FinancialClass zip   age_asof_201601… marijuana_usage… marijuana_dx_hx encounter_id Name  GenericName Strength OrderName Route Frequency
-##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    
-##  1 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  2 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  3 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
-##  4 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87763668044 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
-##  5 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87763668044 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
-##  6 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  7 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  8 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102815382411 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
-##  9 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102858570038 FENT… fentaNYL (… 50 mcg/… fentaNYL… Intr… PRN      
-## 10 51136887… Whit… Hispanic  Fema… Self-pay       826                 85 N                N               102815382411 FENT… fentanyl (… &lt;NA&gt;     fentaNYL… Intr… EVERY 10…
-## # … with 200,747 more rows, and 15 more variables: MinimumDose &lt;dbl&gt;, MaximumDose &lt;dbl&gt;, CalculatedMinimumDose &lt;dbl&gt;, CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;,
-## #   CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;, admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;, admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;, days_from_dob_toprescription &lt;chr&gt;,
-## #   days_from_dob_torelease &lt;chr&gt;, days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;
-
-full_join(patient, inpatient_meds) %&gt;% 
-  full_join(dx)
-## # A tibble: 6,297,064 x 35
-##    person_id Race  Ethnicity Sex   FinancialClass zip   age_asof_201601… marijuana_usage… marijuana_dx_hx encounter_id Name  GenericName Strength OrderName Route Frequency
-##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    
-##  1 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  2 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  3 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  4 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  5 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  6 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  7 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  8 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-##  9 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-## 10 18751786… Whit… Non-Hisp… Male  Self-pay       691                 87 N                N                87495368604 HYDR… HYDROcodon… 5-325 mg HYDROcod… Oral  EVERY 4 …
-## # … with 6,297,054 more rows, and 19 more variables: MinimumDose &lt;dbl&gt;, MaximumDose &lt;dbl&gt;, CalculatedMinimumDose &lt;dbl&gt;, CalculatedMaximumDose &lt;dbl&gt;, DoseUnit &lt;chr&gt;,
-## #   CalculatedDoseUnit &lt;chr&gt;, NumberOfDoses &lt;dbl&gt;, admin_dose &lt;dbl&gt;, admin_dose_unit &lt;chr&gt;, admin_route &lt;chr&gt;, DepartmentName &lt;chr&gt;, days_from_dob_toprescription &lt;chr&gt;,
-## #   days_from_dob_torelease &lt;chr&gt;, days_from_dob_toadministration &lt;chr&gt;, admin_time &lt;time&gt;, code &lt;chr&gt;, code_description &lt;chr&gt;, provenance &lt;chr&gt;, days_from_dob_to_icdcode &lt;chr&gt;
-```
-
-
----
 class: center
 
 
 &lt;img src="img/full_join1.png" width="100%" /&gt;
 
 &lt;img src="img/full_join2.png" width="70%" /&gt;
+
+??? 
+Anytime there is duplicate information, you increase your chance of errors. 
+Joining two tables with multiple by columns can sometimes have unintended
+consequences. 
+
+---
+&lt;img src="img/flat_table.jpg" width="70%" /&gt;
+
+???
+If you were to put these three tables into a flat table there 
+would be 
+over 6 million lines. Think about all the duplicate information 
+that is in this table and how hard it would be to get out simple information
+like the number of males or worse the number of people with a certain dx code!
+
 ---
 class:center, middle
 
@@ -436,29 +407,29 @@ allergy %&gt;%
 inpatient_meds %&gt;% glimpse
 ## Observations: 200,755
 ## Variables: 23
-## $ person_id                      &lt;chr&gt; "4382190347", "1845308846", "4655261700", "4663699839", "4962729560", "4606120152", "4895026014", "4180588937", "4654095910", "4521545097…
-## $ encounter_id                   &lt;dbl&gt; 82514221932, 100218876798, 78005577669, 81601734237, 102279099306, 94597559168, 92036299124, 97769174775, 78125922994, 107579332618, 8809…
-## $ Name                           &lt;chr&gt; "OXYCODONE ER 20 MG TABLET,CRUSH RESISTANT,EXTENDED RELEASE 12 HR", "HYDROCODONE 7.5 MG-ACETAMINOPHEN 325 MG/15 ML ORAL SOLUTION", "FENTA…
-## $ GenericName                    &lt;chr&gt; "oxyCODONE ER 20 mg tablet,crush resistant,extended release 12 hr", "HYDROcodone 7.5 mg-acetaminophen 325 mg/15 mL oral solution", NA, "H…
-## $ Strength                       &lt;chr&gt; "20 mg", "7.5-325 mg/15 mL", NA, "1 mg/mL", "300-30 mg", "20 mg", "6 mg/30 mL", "1 mg/mL", NA, "10-100 mg/5 mL", "20 mg", "40 mg", "100 m…
-## $ OrderName                      &lt;chr&gt; "oxyCODONE (OXYCONTIN) 12 hr tablet 40 mg", "HYDROcodone-acetaminophen (HYCET) 2.5-108 mg/5 mL ORAL solution 10-15 mL 10-15 mL", "fentany…
-## $ Route                          &lt;chr&gt; "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
-## $ Frequency                      &lt;chr&gt; "2 TIMES DAILY", "EVERY 6 HOURS PRN", "CONTINUOUS", "PRN", "EVERY 4 HOURS PRN", "EVERY 12 HOURS SCHEDULED", "CONTINUOUS PRN", "PRN", "CON…
-## $ MinimumDose                    &lt;dbl&gt; 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 0.…
-## $ MaximumDose                    &lt;dbl&gt; NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ CalculatedMinimumDose          &lt;dbl&gt; 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 6.…
-## $ CalculatedMaximumDose          &lt;dbl&gt; NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ DoseUnit                       &lt;chr&gt; "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
-## $ CalculatedDoseUnit             &lt;chr&gt; "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
-## $ NumberOfDoses                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ admin_dose                     &lt;dbl&gt; 40.00, 15.00, NA, 1.00, 2.00, 20.00, NA, 1.00, NA, 5.00, 20.00, 80.00, 200.00, NA, 5.00, 2.00, 20.00, 15.00, 0.50, 20.00, 40.00, 20.00, 2…
-## $ admin_dose_unit                &lt;chr&gt; "mg", "mL", NA, "mg", "tablet", "mg", NA, "mg", NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg…
-## $ admin_route                    &lt;chr&gt; "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
-## $ DepartmentName                 &lt;chr&gt; "MHC NEUROSCIENCE UNIT", "MCR REHAB UNIT", "MCR ORTHO/NEURO UNIT", "MHN OPERATING ROOM", "AMC ORTHO UNIT", "AMC BMT/ONC UNIT", "PVH NEURO…
-## $ days_from_dob_toprescription   &lt;chr&gt; "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
-## $ days_from_dob_torelease        &lt;chr&gt; "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
-## $ days_from_dob_toadministration &lt;chr&gt; "28515", "8384", "11216", "17047", "30029", "24396", "25862", "23728", "26279", "25481", "18887", "18646", "22432", "25043", "9371", "237…
-## $ admin_time                     &lt;time&gt; 20:01:00, 05:11:00, 21:57:00, 17:50:00, 09:43:00, 19:57:00, 23:35:00, 16:52:00, 12:11:00, 14:15:00, 05:20:00, 08:04:00, 21:02:00, 18:54:…
+## $ person_id                      [3m[90m&lt;chr&gt;[39m[23m "4382190347", "1845308846", "4655261700", "4663699839", "4962729560", "4606120152", "4895026014", "4180588937", "4654095910", "4521545097…
+## $ encounter_id                   [3m[90m&lt;dbl&gt;[39m[23m 82514221932, 100218876798, 78005577669, 81601734237, 102279099306, 94597559168, 92036299124, 97769174775, 78125922994, 107579332618, 8809…
+## $ Name                           [3m[90m&lt;chr&gt;[39m[23m "OXYCODONE ER 20 MG TABLET,CRUSH RESISTANT,EXTENDED RELEASE 12 HR", "HYDROCODONE 7.5 MG-ACETAMINOPHEN 325 MG/15 ML ORAL SOLUTION", "FENTA…
+## $ GenericName                    [3m[90m&lt;chr&gt;[39m[23m "oxyCODONE ER 20 mg tablet,crush resistant,extended release 12 hr", "HYDROcodone 7.5 mg-acetaminophen 325 mg/15 mL oral solution", NA, "H…
+## $ Strength                       [3m[90m&lt;chr&gt;[39m[23m "20 mg", "7.5-325 mg/15 mL", NA, "1 mg/mL", "300-30 mg", "20 mg", "6 mg/30 mL", "1 mg/mL", NA, "10-100 mg/5 mL", "20 mg", "40 mg", "100 m…
+## $ OrderName                      [3m[90m&lt;chr&gt;[39m[23m "oxyCODONE (OXYCONTIN) 12 hr tablet 40 mg", "HYDROcodone-acetaminophen (HYCET) 2.5-108 mg/5 mL ORAL solution 10-15 mL 10-15 mL", "fentany…
+## $ Route                          [3m[90m&lt;chr&gt;[39m[23m "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
+## $ Frequency                      [3m[90m&lt;chr&gt;[39m[23m "2 TIMES DAILY", "EVERY 6 HOURS PRN", "CONTINUOUS", "PRN", "EVERY 4 HOURS PRN", "EVERY 12 HOURS SCHEDULED", "CONTINUOUS PRN", "PRN", "CON…
+## $ MinimumDose                    [3m[90m&lt;dbl&gt;[39m[23m 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 0.…
+## $ MaximumDose                    [3m[90m&lt;dbl&gt;[39m[23m NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ CalculatedMinimumDose          [3m[90m&lt;dbl&gt;[39m[23m 40.0, 10.0, NA, NA, 1.0, 20.0, NA, NA, NA, 5.0, 20.0, 80.0, 200.0, NA, 5.0, 1.0, 20.0, 15.0, NA, 20.0, 40.0, 20.0, 20.0, NA, 45.0, NA, 6.…
+## $ CalculatedMaximumDose          [3m[90m&lt;dbl&gt;[39m[23m NA, 15.0, NA, NA, 2.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.0, NA, 30.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ DoseUnit                       [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
+## $ CalculatedDoseUnit             [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, NA, "tablet", "mg", NA, NA, NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", NA, "mg",…
+## $ NumberOfDoses                  [3m[90m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ admin_dose                     [3m[90m&lt;dbl&gt;[39m[23m 40.00, 15.00, NA, 1.00, 2.00, 20.00, NA, 1.00, NA, 5.00, 20.00, 80.00, 200.00, NA, 5.00, 2.00, 20.00, 15.00, 0.50, 20.00, 40.00, 20.00, 2…
+## $ admin_dose_unit                [3m[90m&lt;chr&gt;[39m[23m "mg", "mL", NA, "mg", "tablet", "mg", NA, "mg", NA, "mL", "mg", "mg", "mg", NA, "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg", "mg…
+## $ admin_route                    [3m[90m&lt;chr&gt;[39m[23m "Oral", "Oral", "Intravenous", "Intravenous", "Oral", "Oral", "Intravenous", "Intravenous", "Intravenous", "Oral", "Oral", "Oral", "Oral"…
+## $ DepartmentName                 [3m[90m&lt;chr&gt;[39m[23m "MHC NEUROSCIENCE UNIT", "MCR REHAB UNIT", "MCR ORTHO/NEURO UNIT", "MHN OPERATING ROOM", "AMC ORTHO UNIT", "AMC BMT/ONC UNIT", "PVH NEURO…
+## $ days_from_dob_toprescription   [3m[90m&lt;chr&gt;[39m[23m "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
+## $ days_from_dob_torelease        [3m[90m&lt;chr&gt;[39m[23m "28512", "8383", "11216", "17047", "30029", "24394", "25862", "23728", "26279", "25479", "18885", "18641", "22430", "25043", "9366", "237…
+## $ days_from_dob_toadministration [3m[90m&lt;chr&gt;[39m[23m "28515", "8384", "11216", "17047", "30029", "24396", "25862", "23728", "26279", "25481", "18887", "18646", "22432", "25043", "9371", "237…
+## $ admin_time                     [3m[90m&lt;time&gt;[39m[23m 20:01:00, 05:11:00, 21:57:00, 17:50:00, 09:43:00, 19:57:00, 23:35:00, 16:52:00, 12:11:00, 14:15:00, 05:20:00, 08:04:00, 21:02:00, 18:54:…
 ```
 
 ---
